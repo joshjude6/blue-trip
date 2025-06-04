@@ -33,11 +33,9 @@
 </script>
 
 <h1 class="text-center text-3xl font-bold mt-8">
-  klar for <span class="text-blue-600 transition-colors duration-300">{currentWord}</span>tur?
+  klar for <span class="text-blue-400 transition-colors duration-300">{currentWord}</span>tur?
 </h1>
 
 <style>
-  h1 {
-    margin: 1.5rem 0;
-  }
+
 </style>
