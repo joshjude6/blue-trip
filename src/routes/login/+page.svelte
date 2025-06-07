@@ -42,8 +42,11 @@
     try {
       await registerUser({ firstName, lastName, email: regEmail, password: regPassword });
       goto("/user");
+      console.log("Bruker registrert!")
     } catch (err) {
       regError = "Registrering mislyktes.";
+      console.error('Firebase signup error', err.code, err.message);
+      regError = err.message;
     }
   }
 

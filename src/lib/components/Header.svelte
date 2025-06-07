@@ -1,6 +1,10 @@
 <!-- src/lib/components/Header.svelte -->
-<script lang="ts">
+<script>
+  // @ts-nocheck
   import { onMount } from 'svelte';
+  import { auth, db } from '$lib/api/firebase.js';
+  import { onAuthStateChanged } from 'firebase/auth';
+  import { doc, getDoc } from 'firebase/firestore';
 
   // List of “blå” in various languages:
   const translations = [
@@ -30,10 +34,25 @@
     // Clean up when component unmounts:
     return () => clearInterval(interval);
   });
+
+  let userName = '';
+  onMount(() => {
+    // subscribe to Firebase Auth state
+    const unsub = onAuthStateChanged(auth, async user => {
+      if (user) {
+        // fetch that user’s profile doc from Firestore
+        const snap = await getDoc(doc(db, 'users', user.uid));
+        if (snap.exists()) userName = snap.data().fornavn;
+      } else {
+        userName = '';
+      }
+    });
+    return () => unsub();
+  });
 </script>
 
 <h1 class="text-center text-3xl font-bold mt-8">
-  klar for <span class="text-blue-400 transition-colors duration-300">{currentWord}</span>tur?
+  klar for <span class="text-blue-400 transition-colors duration-300">{currentWord}</span>tur, {userName}?
 </h1>
 
 <style>
