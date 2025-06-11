@@ -1,1 +1,20 @@
+@font-face {
+  font-family: 'Kalmansk';
+  src: url('/fonts/Kalmansk-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SaoTorpes';
+  src: url('/fonts/SaoTorpes.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 @import "tailwindcss";
+
+@theme{
+    --font-saotorpes: SaoTorpes, "sans-serif";
+    --font-kalmansk: Kalmansk, "sans-serif";
+}

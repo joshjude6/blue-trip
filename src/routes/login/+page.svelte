@@ -56,7 +56,7 @@
   }
 </script>
 
-<main class="max-w-md mx-auto p-6 space-y-6">
+<main class="max-w-md mx-auto p-6 space-y-6 font-kalmansk text-3xl">
   <!-- Login form -->
   <section class="border p-4 rounded space-y-2">
     {#if loginError}
