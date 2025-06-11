@@ -8,5 +8,4 @@
   <Header />
   <Nav />
   <slot />
-  <p class="mt-4 text-center">Velkommen til Blåtur-nettsiden — alt annet kommer senere!</p>
 </main>

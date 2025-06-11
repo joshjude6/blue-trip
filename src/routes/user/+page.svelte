@@ -1,8 +1,6 @@
-<!--
-endre pb
-legge inn / endre gjett
-melde enhet på deg selv
-sende enhet til noen andre
-oversikt over kryss
--->
-<h1>Brukerside</h1>
+<script>
+    import Profilepic from "$lib/components/Profilepic.svelte";
+</script>
+
+<h2 class="text-3xl font-kalmansk font-bold">Her er brukersiden din!</h2>
+<Profilepic />

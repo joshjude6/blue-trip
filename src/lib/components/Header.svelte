@@ -7,16 +7,20 @@
   import { doc, getDoc } from 'firebase/firestore';
 
   const translations = [
-    'blå',      // Norwegian
-    'blue',     // English
-    'blau',     // German
-    'azul',     // Spanish / Portuguese
-    'modrá',    // Czech / Slovak
-    'sininen',  // Finnish
-    'plava',    // Croatian / Serbian
-    'kék',      // Hungarian
-    'zils',     // Latvian
-    'mavi'      // Turkish
+    'blå', 
+    'blue', 
+    'blau',
+    '青い',
+    'azul',
+    '파란색',
+    'modrá',
+    'μπλε',
+    'sininen',
+    'plava',
+    'kék',     
+    'zils',     
+    'mavi',
+    '蓝色'      
   ];
 
   let index = 0;
