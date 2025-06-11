@@ -6,7 +6,6 @@
   import { onAuthStateChanged } from 'firebase/auth';
   import { doc, getDoc } from 'firebase/firestore';
 
-  // List of “blå” in various languages:
   const translations = [
     'blå',      // Norwegian
     'blue',     // English
@@ -20,27 +19,21 @@
     'mavi'      // Turkish
   ];
 
-  // Reactive index and current word:
   let index = 0;
   let currentWord = translations[index];
 
-  // Cycle through every 1 second (1000ms):
   onMount(() => {
     const interval = setInterval(() => {
       index = (index + 1) % translations.length;
       currentWord = translations[index];
     }, 1000);
-
-    // Clean up when component unmounts:
     return () => clearInterval(interval);
   });
 
   let userName = '';
   onMount(() => {
-    // subscribe to Firebase Auth state
     const unsub = onAuthStateChanged(auth, async user => {
       if (user) {
-        // fetch that user’s profile doc from Firestore
         const snap = await getDoc(doc(db, 'users', user.uid));
         if (snap.exists()) userName = snap.data().fornavn;
       } else {
@@ -51,14 +44,11 @@
   });
 </script>
 
-<h1 class="text-center text-3xl font-bold mt-8">
-  klar for 
-  <span class="text-blue-400 transition-colors duration-300">
-    {currentWord}
-  </span>
-  tur{#if userName}, {userName}{/if}?
-</h1>
 
+
+<div class="w-full text-center flex justify-center mt-8">
+  <h1 class="text-3xl font-bold text-center">klar for <span class="text-blue-400 font-bold transition-colors duration-300">{currentWord}</span>tur{#if userName}, {userName}{/if}?</h1>
+</div>
 
 <style>
 

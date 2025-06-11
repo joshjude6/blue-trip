@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { browser } from '$app/environment';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAdNX5w10w62U409INArUAzMEUk1ElHNO8",
@@ -16,6 +17,17 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+
+let analytics;
+
+if (browser) {
+  // Only run this in the browser
+  import('firebase/analytics').then(({ getAnalytics }) => {
+    analytics = getAnalytics(app);
+  });
+}
+
+export { app, analytics };

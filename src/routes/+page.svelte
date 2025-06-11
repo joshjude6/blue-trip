@@ -6,10 +6,8 @@ leaderboard
 <script>
 </script>
 
-<h1>Her kommer hjemmesiden!</h1>
+<h1 class="green">Her kommer hjemmesiden!</h1>
 
 <style>
-    h1{
-        color: blue;
-    }
+
 </style>
