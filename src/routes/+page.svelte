@@ -4,10 +4,8 @@ countdown
 leaderboard
 -->
 <script>
+    import Countdown from "$lib/components/Countdown.svelte";
+
 </script>
 
-<h1 class="green">Her kommer hjemmesiden!</h1>
-
-<style>
-
-</style>
+<Countdown />
