@@ -1,5 +1,25 @@
-<script>
-  let isOpen = false;
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { db } from '$lib/api/firebase.js';
+  import { onAuthChange } from '$lib/api/auth.js';
+  import { doc, getDoc } from 'firebase/firestore';
+
+  let showAdminButton = false;
+
+  onMount(() => {
+    onAuthChange(async (user) => {
+      if (user) {
+        try {
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          showAdminButton = userDoc.exists() && userDoc.data().isAdmin === true;
+        } catch (error) {
+          showAdminButton = false;
+        }
+      } else {
+        showAdminButton = false;
+      }
+    });
+  });
 </script>
 
 <nav class="w-full py-4 shadow-md">
@@ -39,6 +59,7 @@
         >Hint</a
       >
     </li>
+    {#if showAdminButton}
     <li>
       <a
         href="/admin"
@@ -46,5 +67,6 @@
         >Admin</a
       >
     </li>
+    {/if}
   </ul>
 </nav>
