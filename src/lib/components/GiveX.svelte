@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import { db } from '$lib/api/firebase.js';
     import { onAuthChange } from '$lib/api/auth.js';
-    import { collection, getDocs, doc, increment, serverTimestamp, runTransaction } from "firebase/firestore";
+    import { collection, getDoc, getDocs, doc, increment, serverTimestamp, runTransaction } from "firebase/firestore";
 
     let users: Array<{
         id: string;
@@ -21,16 +21,41 @@
     const dispatch = createEventDispatcher();
 
     onMount(() => {
-        const unsubscribe = onAuthChange((user: any) => {
-            currentUser = user;
-            authLoading = false;
-            if (user) {
-                fetchUsers();
-            }
-        });
+        const unsubscribe = onAuthChange(async (user: any) => {
+        authLoading = false;
 
-        return () => unsubscribe();
+        if (user) {
+        try {
+            const snap = await getDoc(doc(db, 'users', user.uid));
+            if (snap.exists()) {
+            const userData = snap.data();
+            currentUser = {
+                ...user,
+                fornavn: userData.fornavn || 'Unknown'
+            };
+            } else {
+            currentUser = {
+                ...user,
+                fornavn: 'Unknown'
+            };
+            }
+        } catch (error) {
+            console.error('Failed to fetch user info:', error);
+            currentUser = {
+            ...user,
+            fornavn: 'Unknown'
+            };
+        }
+
+        await fetchUsers();
+        } else {
+        currentUser = null;
+        }
     });
+
+    return () => unsubscribe();
+    });
+
 
     async function fetchUsers() {
         try {
@@ -75,7 +100,7 @@
 
         try {
             const receiver = users.find(u => u.id === selectedReceiver);
-            const giverName = currentUser.displayName || currentUser.email?.split('@')[0] || 'Unknown';
+            const giverName = currentUser.fornavn || 'Unknown';
 
             // Use transaction to ensure both operations succeed together
             await runTransaction(db, async (transaction) => {
