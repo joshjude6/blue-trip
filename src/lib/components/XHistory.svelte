@@ -33,7 +33,7 @@
             querySnapshot.forEach((doc) => {
                 const data = doc.data();
                 
-                let formattedTime = 'Unknown time';
+                let formattedTime = 'Ukjent tid';
                 if (data.timestamp && data.timestamp.toDate) {
                     const date = data.timestamp.toDate();
                     formattedTime = new Intl.DateTimeFormat('no-NO', {
@@ -47,9 +47,9 @@
                 
                 kryssHistory.push({
                     id: doc.id,
-                    giverName: data.giverName || 'Unknown',
-                    receiverName: data.receiverName || 'Unknown',
-                    reason: data.reason || 'No reason provided',
+                    giverName: data.giverName || 'Ukjent',
+                    receiverName: data.receiverName || 'Ukjent',
+                    reason: data.reason || 'Ingen grunn oppgitt',
                     amount: data.amount || 1,
                     timestamp: data.timestamp,
                     formattedTime
@@ -59,7 +59,7 @@
             console.log("Kryss history fetched:", kryssHistory);
         } catch (err) {
             console.error("Error fetching kryss history:", err);
-            error = "Failed to load kryss history";
+            error = "Kunne ikke laste krysshistorikk";
         } finally {
             loading = false;
         }
@@ -82,13 +82,13 @@
 
 <div class="w-full bg-white rounded-lg shadow-lg p-4 sm:p-6">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black">📜 Kryss-logg</h2>
+        <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black">📜 Krysshistorikk</h2>
         <div class="flex gap-2">
             <button 
                 on:click={toggleShowAll}
                 class="px-3 py-2 bg-gray-600 text-white font-kalmansk rounded hover:bg-gray-700 transition-colors text-sm"
             >
-                {showAll ? 'Show Recent' : 'Show All'}
+                {showAll ? 'Vis nylige' : 'Vis alle'}
             </button>
             <button 
                 on:click={fetchKryssHistory}
@@ -102,21 +102,21 @@
 
     {#if loading}
         <div class="text-center py-6 sm:py-8">
-            <div class="animate-pulse font-kalmansk text-black text-sm sm:text-base">Loading history...</div>
+            <div class="animate-pulse font-kalmansk text-black text-base sm:text-lg">Laster historikk...</div>
         </div>
     {:else if error}
         <div class="text-center py-6 sm:py-8 text-black">
-            <p class="font-kalmansk text-sm sm:text-base text-red-600">{error}</p>
+            <p class="font-kalmansk text-base sm:text-lg text-red-600">{error}</p>
             <button 
                 on:click={fetchKryssHistory}
-                class="mt-2 px-4 py-2 bg-blue-600 text-white font-kalmansk rounded hover:bg-blue-700 text-sm"
+                class="mt-2 px-4 py-2 bg-blue-600 text-white font-kalmansk rounded hover:bg-blue-700 text-base"
             >
-                Try Again
+                Prøv igjen
             </button>
         </div>
     {:else if kryssHistory.length === 0}
         <div class="text-center py-6 sm:py-8 text-black">
-            <p class="font-kalmansk text-sm sm:text-base">No kryss history yet. Start giving some kryss! ❌</p>
+            <p class="font-kalmansk text-base sm:text-lg">Ingen krysshistorikk ennå. Begynn å gi noen kryss! ❌</p>
         </div>
     {:else}
         <!-- Mobile: Card Layout -->
@@ -125,22 +125,22 @@
                 <div class="bg-gray-50 rounded-lg p-3 border-l-4 border-blue-600">
                     <div class="flex items-start justify-between mb-2">
                         <div class="flex items-center space-x-2">
-                            <span class="font-kalmansk font-semibold text-black text-sm">
+                            <span class="font-kalmansk font-semibold text-black text-base">
                                 {entry.giverName}
                             </span>
-                            <span class="text-gray-500 text-sm">→</span>
-                            <span class="font-kalmansk font-semibold text-blue-600 text-sm">
+                            <span class="text-gray-500 text-base">→</span>
+                            <span class="font-kalmansk font-semibold text-blue-600 text-base">
                                 {entry.receiverName}
                             </span>
                         </div>
-                        <span class="bg-blue-600 text-white px-2 py-1 rounded text-xs font-kalmansk">
+                        <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm font-kalmansk">
                             {entry.amount}x
                         </span>
                     </div>
-                    <p class="font-kalmansk text-black text-sm mb-2">
+                    <p class="font-kalmansk text-black text-base mb-2">
                         "{entry.reason}"
                     </p>
-                    <p class="text-xs text-gray-500 font-kalmansk">
+                    <p class="text-sm text-gray-500 font-kalmansk">
                         {entry.formattedTime}
                     </p>
                 </div>
@@ -152,33 +152,33 @@
             <table class="w-full">
                 <thead>
                     <tr class="border-b-2 border-gray-200">
-                        <th class="text-left py-3 px-2 font-saotorpes text-black text-sm">From</th>
-                        <th class="text-left py-3 px-2 font-saotorpes text-black text-sm">To</th>
-                        <th class="text-left py-3 px-2 font-saotorpes text-black text-sm">Reason</th>
-                        <th class="text-center py-3 px-2 font-saotorpes text-black text-sm">Amount</th>
-                        <th class="text-right py-3 px-2 font-saotorpes text-black text-sm">When</th>
+                        <th class="text-left py-3 px-2 font-saotorpes text-black text-base">Fra</th>
+                        <th class="text-left py-3 px-2 font-saotorpes text-black text-base">Til</th>
+                        <th class="text-left py-3 px-2 font-saotorpes text-black text-base">Grunn</th>
+                        <th class="text-center py-3 px-2 font-saotorpes text-black text-base">Antall</th>
+                        <th class="text-right py-3 px-2 font-saotorpes text-black text-base">Når</th>
                     </tr>
                 </thead>
                 <tbody>
                     {#each kryssHistory as entry}
                         <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                            <td class="py-3 px-2 font-kalmansk text-black text-sm">
+                            <td class="py-3 px-2 font-kalmansk text-black text-base">
                                 {entry.giverName}
                             </td>
-                            <td class="py-3 px-2 font-kalmansk text-blue-600 font-semibold text-sm">
+                            <td class="py-3 px-2 font-kalmansk text-blue-600 font-semibold text-base">
                                 {entry.receiverName}
                             </td>
-                            <td class="py-3 px-2 font-kalmansk text-black text-sm max-w-xs">
+                            <td class="py-3 px-2 font-kalmansk text-black text-base max-w-xs">
                                 <span class="truncate block" title={entry.reason}>
                                     "{entry.reason}"
                                 </span>
                             </td>
                             <td class="py-3 px-2 text-center">
-                                <span class="bg-blue-600 text-white px-2 py-1 rounded text-xs font-kalmansk">
+                                <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm font-kalmansk">
                                     {entry.amount}x
                                 </span>
                             </td>
-                            <td class="py-3 px-2 text-right font-kalmansk text-gray-500 text-xs">
+                            <td class="py-3 px-2 text-right font-kalmansk text-gray-500 text-sm">
                                 {entry.formattedTime}
                             </td>
                         </tr>
@@ -190,8 +190,8 @@
         <!-- Summary -->
         <div class="mt-6 pt-4 border-t border-gray-200">
             <div class="text-center">
-                <span class="text-sm font-kalmansk text-black">
-                    Showing {kryssHistory.length} {showAll ? 'of all' : 'recent'} entries
+                <span class="text-base font-kalmansk text-black">
+                    Viser {kryssHistory.length} {showAll ? 'av alle' : 'nylige'} oppføringer
                 </span>
             </div>
         </div>

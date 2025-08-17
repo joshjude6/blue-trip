@@ -72,7 +72,7 @@
 
 <div class="w-full bg-white rounded-lg shadow-lg p-4 sm:p-6">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black">📊 Oversikt over kryss</h2>
+        <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black">📊 Kryss Overview</h2>
         <button 
             on:click={fetchUsers}
             class="px-4 py-2 bg-blue-600 text-white font-kalmansk rounded hover:bg-blue-700 transition-colors text-sm sm:text-base"
@@ -84,21 +84,21 @@
 
     {#if loading}
         <div class="text-center py-6 sm:py-8">
-            <div class="animate-pulse font-kalmansk text-black text-sm sm:text-base">Loading chart...</div>
+            <div class="animate-pulse font-kalmansk text-black text-base sm:text-lg">Loading chart...</div>
         </div>
     {:else if error}
         <div class="text-center py-6 sm:py-8 text-black">
-            <p class="font-kalmansk text-sm sm:text-base text-red-600">{error}</p>
+            <p class="font-kalmansk text-base sm:text-lg text-red-600">{error}</p>
             <button 
                 on:click={fetchUsers}
-                class="mt-2 px-4 py-2 bg-blue-600 text-white font-kalmansk rounded hover:bg-blue-700 text-sm"
+                class="mt-2 px-4 py-2 bg-blue-600 text-white font-kalmansk rounded hover:bg-blue-700 text-base"
             >
                 Try Again
             </button>
         </div>
     {:else if users.length === 0}
         <div class="text-center py-6 sm:py-8 text-black">
-            <p class="font-kalmansk text-sm sm:text-base">No users found.</p>
+            <p class="font-kalmansk text-base sm:text-lg">No users found.</p>
         </div>
     {:else}
         <!-- Bar Chart -->
@@ -122,7 +122,7 @@
                         
                         <!-- User Name -->
                         <div class="text-center">
-                            <span class="text-xs sm:text-sm font-kalmansk text-black font-semibold">
+                            <span class="text-sm sm:text-base font-kalmansk text-black font-semibold">
                                 {user.name}
                             </span>
                         </div>
@@ -131,7 +131,7 @@
             </div>
             
             <!-- Y-axis labels -->
-            <div class="flex justify-between mt-4 text-xs text-gray-500 font-kalmansk">
+            <div class="flex justify-between mt-4 text-sm text-gray-500 font-kalmansk">
                 <span>0</span>
                 <span class="text-center">{Math.floor(maxCrosses/2)}</span>
                 <span>{maxCrosses}</span>
@@ -145,19 +145,19 @@
                     <div class="text-lg sm:text-xl font-saotorpes text-blue-600">
                         {users.reduce((sum, user) => sum + user.totalCrosses, 0)}
                     </div>
-                    <div class="text-xs sm:text-sm font-kalmansk text-black">Total Kryss</div>
+                    <div class="text-sm sm:text-base font-kalmansk text-black">Total Kryss</div>
                 </div>
                 <div>
                     <div class="text-lg sm:text-xl font-saotorpes text-blue-600">
                         {users.length}
                     </div>
-                    <div class="text-xs sm:text-sm font-kalmansk text-black">Players</div>
+                    <div class="text-sm sm:text-base font-kalmansk text-black">Players</div>
                 </div>
                 <div>
                     <div class="text-lg sm:text-xl font-saotorpes text-blue-600">
                         {maxCrosses}
                     </div>
-                    <div class="text-xs sm:text-sm font-kalmansk text-black">Most Kryss</div>
+                    <div class="text-sm sm:text-base font-kalmansk text-black">Most Kryss</div>
                 </div>
             </div>
         </div>

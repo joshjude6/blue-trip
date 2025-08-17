@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import { db } from '$lib/api/firebase.js';
     import { onAuthChange } from '$lib/api/auth.js';
-    import { collection, getDocs, addDoc, doc, updateDoc, increment, serverTimestamp } from "firebase/firestore";
+    import { collection, getDocs, doc, increment, serverTimestamp, runTransaction } from "firebase/firestore";
 
     let users: Array<{
         id: string;
@@ -56,17 +56,17 @@
 
     async function giveKryss() {
         if (!currentUser) {
-            message = 'You must be logged in to give kryss';
+            message = 'Du må være logget inn for å kunne gi kryss.';
             return;
         }
 
         if (!selectedReceiver || !reason.trim()) {
-            message = 'Please select a receiver and provide a reason';
+            message = 'Velg en mottaker og gi en grunn.';
             return;
         }
 
         if (amount < 1 || amount > 10) {
-            message = 'Amount must be between 1 and 10';
+            message = 'Mengde må være mellom 1 og 10.';
             return;
         }
 
@@ -74,27 +74,33 @@
         message = '';
 
         try {
-            // Find receiver name for the log
             const receiver = users.find(u => u.id === selectedReceiver);
             const giverName = currentUser.displayName || currentUser.email?.split('@')[0] || 'Unknown';
 
-            // Add to kryss log collection
-            await addDoc(collection(db, 'kryssLog'), {
-                giverId: currentUser.uid,
-                giverName: giverName,
-                receiverId: selectedReceiver,
-                receiverName: receiver?.name || 'Unknown',
-                reason: reason.trim(),
-                amount: amount,
-                timestamp: serverTimestamp()
+            // Use transaction to ensure both operations succeed together
+            await runTransaction(db, async (transaction) => {
+                // Create a reference for the new kryssLog document
+                const kryssLogRef = doc(collection(db, 'kryssLog'));
+                
+                // Add to kryss log
+                transaction.set(kryssLogRef, {
+                    giverId: currentUser.uid,
+                    giverName: giverName,
+                    receiverId: selectedReceiver,
+                    receiverName: receiver?.name || 'Unknown',
+                    reason: reason.trim(),
+                    amount: amount,
+                    timestamp: serverTimestamp()
+                });
+
+                // Update receiver's total crosses
+                const userRef = doc(db, 'users', selectedReceiver);
+                transaction.update(userRef, {
+                    totalCrosses: increment(amount)
+                });
             });
 
-            // Update receiver's total crosses
-            await updateDoc(doc(db, 'users', selectedReceiver), {
-                totalCrosses: increment(amount)
-            });
-
-            message = `Successfully gave ${amount} kryss to ${receiver?.name}! 🎉`;
+            message = `Ga ${amount} kryss til ${receiver?.name}! 🎉`;
             
             // Reset form
             selectedReceiver = '';
@@ -106,7 +112,15 @@
 
         } catch (error) {
             console.error("Error giving kryss:", error);
-            message = 'Error giving kryss. Please try again.';
+            
+            // Better error messages
+            if (error === 'permission-denied') {
+                message = 'Ingen tillatelse. Sjekk Firestore-regler.';
+            } else if (error === 'not-found') {
+                message = 'Brukeren ble ikke funnet.';
+            } else {
+                message = 'Feil ved giving av kryss. Prøv igjen.';
+            }
         } finally {
             loading = false;
             // Clear message after 5 seconds
@@ -116,59 +130,56 @@
 </script>
 
 <div class="w-full bg-white rounded-lg shadow-lg p-4 sm:p-6">
-    <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black mb-6">❌ Give Kryss</h2>
+    <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black mb-6">❌ Gi kryss her!</h2>
 
     {#if authLoading}
         <div class="text-center py-6">
-            <div class="animate-pulse font-kalmansk text-black text-sm">Loading...</div>
+            <div class="animate-pulse font-kalmansk text-black text-base">Laster inn...</div>
         </div>
     {:else if !currentUser}
         <div class="text-center py-6">
-            <p class="font-kalmansk text-black text-sm sm:text-base">You must be logged in to give kryss.</p>
+            <p class="font-kalmansk text-black text-base sm:text-lg">Du må være logget inn for å gi kryss!</p>
         </div>
     {:else}
         <form on:submit|preventDefault={giveKryss} class="space-y-4 sm:space-y-6">
-            <!-- Receiver Selection -->
             <div>
-                <label for="receiver" class="block text-sm font-kalmansk font-semibold text-black mb-2">
-                    Who gets the kryss?
+                <label for="receiver" class="block text-base font-kalmansk font-semibold text-black mb-2">
+                    Hvem får kryss denne gangen?
                 </label>
                 <select 
                     id="receiver"
                     bind:value={selectedReceiver}
-                    class="w-full p-3 border border-gray-300 rounded-lg font-kalmansk text-sm sm:text-base focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                    class="w-full p-3 border border-gray-300 rounded-lg font-kalmansk text-base sm:text-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                     required
                 >
-                    <option value="">Select someone...</option>
+                    <option value="">Velg en deltaker...</option>
                     {#each users as user}
                         <option value={user.id}>{user.name}</option>
                     {/each}
                 </select>
             </div>
 
-            <!-- Reason Input -->
             <div>
-                <label for="reason" class="block text-sm font-kalmansk font-semibold text-black mb-2">
-                    Why are they getting kryss?
+                <label for="reason" class="block text-base font-kalmansk font-semibold text-black mb-2">
+                    Hvorfor får de kryss?
                 </label>
                 <textarea 
                     id="reason"
                     bind:value={reason}
-                    placeholder="Explain why they deserve these kryss..."
-                    class="w-full p-3 border border-gray-300 rounded-lg font-kalmansk text-sm sm:text-base focus:ring-2 focus:ring-blue-600 focus:border-transparent resize-none"
+                    placeholder="Forklar hvorfor de skal ha kryss..."
+                    class="w-full p-3 border border-gray-300 rounded-lg font-kalmansk text-base sm:text-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent resize-none"
                     rows="3"
                     maxlength="200"
                     required
                 ></textarea>
-                <div class="text-xs text-gray-500 font-kalmansk mt-1">
-                    {reason.length}/200 characters
+                <div class="text-sm text-gray-500 font-kalmansk mt-1">
+                    {reason.length}/200 tegn
                 </div>
             </div>
 
-            <!-- Amount Selection -->
             <div>
-                <label for="amount" class="block text-sm font-kalmansk font-semibold text-black mb-2">
-                    How many kryss?
+                <label for="amount" class="block text-base font-kalmansk font-semibold text-black mb-2">
+                    Hvor mange kryss?
                 </label>
                 <div class="flex items-center space-x-4">
                     <input 
@@ -177,7 +188,7 @@
                         bind:value={amount}
                         min="1"
                         max="10"
-                        class="w-20 p-3 border border-gray-300 rounded-lg font-kalmansk text-sm sm:text-base focus:ring-2 focus:ring-blue-600 focus:border-transparent text-center"
+                        class="w-20 p-3 border border-gray-300 rounded-lg font-kalmansk text-base sm:text-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent text-center"
                         required
                     />
                     <div class="flex flex-wrap gap-1 sm:gap-2">
@@ -185,7 +196,7 @@
                             <button 
                                 type="button"
                                 on:click={() => amount = preset}
-                                class="px-2 sm:px-3 py-1 text-xs sm:text-sm font-kalmansk border border-gray-300 rounded {amount === preset ? 'bg-blue-600 text-white' : 'bg-white text-black hover:bg-gray-50'} transition-colors"
+                                class="px-3 sm:px-4 py-2 text-sm sm:text-base font-kalmansk border border-gray-300 rounded {amount === preset ? 'bg-blue-600 text-white' : 'bg-white text-black hover:bg-gray-50'} transition-colors"
                             >
                                 {preset}
                             </button>
@@ -194,20 +205,18 @@
                 </div>
             </div>
 
-            <!-- Message Display -->
             {#if message}
-                <div class="p-3 rounded-lg {message.includes('Error') || message.includes('must') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'} font-kalmansk text-sm">
+                <div class="p-3 rounded-lg {message.includes('Feil') || message.includes('må') || message.includes('Ingen') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'} font-kalmansk text-base">
                     {message}
                 </div>
             {/if}
 
-            <!-- Submit Button -->
             <button 
                 type="submit"
                 disabled={loading || !selectedReceiver || !reason.trim()}
-                class="w-full py-3 px-6 bg-blue-600 text-white font-kalmansk rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-sm sm:text-base"
+                class="w-full py-3 px-6 bg-blue-600 text-white font-kalmansk rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base sm:text-lg"
             >
-                {loading ? 'Giving Kryss...' : `Give ${amount} Kryss`} ❌
+                {loading ? 'Gir kryss...' : `Gi ${amount} kryss`}
             </button>
         </form>
     {/if}
