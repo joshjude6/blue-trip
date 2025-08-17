@@ -1,1 +1,5 @@
-<h1>Admin-side</h1>
+<script>
+    import AdminReset from "$lib/components/AdminReset.svelte";
+
+</script>
+<AdminReset />

@@ -25,7 +25,7 @@
     <!-- Page Header -->
     <div class="text-center px-4">
         <h1 class="text-2xl sm:text-3xl font-saotorpes font-bold text-black mb-2">Kryssesystem</h1>
-        <p class="font-kalmansk text-black text-sm sm:text-base">Vær generøse med kryssene :)</p>
+        <p class="font-kalmansk sm:text-3xl text-black text-sm sm:text-base">Vær generøse med kryssene!</p>
     </div>
 
     <!-- Chart Section -->
