@@ -9,6 +9,7 @@
         name: string;
         etternavn: string;
         totalCrosses: number;
+        drinkCount: number;
         profilePictureUrl: string | null;
         profilePictureLoading: boolean;
     }> = [];
@@ -55,6 +56,7 @@
                     name: userData.fornavn || 'Unknown',
                     etternavn: userData.etternavn || '',
                     totalCrosses: userData.totalCrosses || 0,
+                    drinkCount: userData.drinkCount || 0,
                     profilePictureUrl: userData.profilePictureUrl || null, // If stored as URL in document
                     profilePictureLoading: true
                 });
@@ -172,7 +174,16 @@
                             </h3>
                         </div>
                     </div>
-                    <div class="text-right flex-shrink-0 ml-2">
+                    <!-- drikke/kryss-teller -->
+                    <div class="text-right flex-shrink-0 ml-8">
+                        <div class="text-lg sm:text-xl font-saotorpes text-blue-600">
+                            {user.drinkCount}
+                        </div>
+                        <div class="text-xs sm:text-sm font-kalmansk text-black">
+                            {user.drinkCount === 1 ? 'enhet' : 'enheter'}
+                        </div>
+                    </div>
+                    <div class="text-right flex-shrink-0 ml-8">
                         <div class="text-lg sm:text-xl font-saotorpes text-blue-600">
                             {user.totalCrosses}
                         </div>

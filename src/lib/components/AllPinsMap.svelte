@@ -165,7 +165,7 @@
 
 <div class="w-full bg-white rounded-lg shadow-lg p-4 sm:p-6">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black">🗺️ Alles gjetninger</h2>
+        <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black">🗺️ Hvor tror dere vi skal?</h2>
         <button 
             on:click={fetchAllPins}
             disabled={loading}

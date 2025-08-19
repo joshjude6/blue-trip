@@ -236,7 +236,7 @@
 
         <div class="text-center">
             <p class="font-kalmansk text-gray-600 text-base">
-                Klikk hvor som helst på kartet for å plassere din pin. Du kan dra den for å justere!
+                Klikk hvor som helst på kartet for å plassere din pin. Du kan dra den for å justere! For å endre gjett, bare trykk et annet sted.
             </p>
         </div>
     {/if}
