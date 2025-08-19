@@ -23,6 +23,7 @@
 	},
 	"dependencies": {
 		"@tailwindcss/postcss": "^4.1.8",
+		"@types/leaflet": "^1.9.20",
 		"firebase": "^11.8.1",
 		"tailwindcss": "^4.1.8"
 	}

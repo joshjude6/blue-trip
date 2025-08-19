@@ -8,6 +8,10 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+	interface Window {
+		L?: any;
+		savePin?: () => void;
+	}
 }
 
 export {};
