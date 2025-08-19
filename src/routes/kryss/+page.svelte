@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-    <title>Kryss - Blue Trip</title>
+    <title>Kryss</title>
 </svelte:head>
 
 <div class="w-full max-w-6xl mx-auto space-y-6 sm:space-y-8">
