@@ -1,1 +1,0 @@
-<h1>Hint-page</h1>
