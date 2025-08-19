@@ -114,7 +114,7 @@
 
 <div class="w-full max-w-2xl mx-auto p-4 sm:p-6 bg-white rounded-lg shadow-lg">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black">🏆 Leaderboard</h2>
+        <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black">⚔️ Kryss-leaderboard</h2>
         <button 
             on:click={fetchLeaderboard}
             class="px-4 py-2 bg-blue-600 text-white font-kalmansk rounded hover:bg-blue-700 transition-colors text-sm sm:text-base"
@@ -172,15 +172,6 @@
                             <h3 class="font-kalmansk font-semibold text-black text-sm sm:text-base truncate">
                                 {user.name} {user.etternavn}
                             </h3>
-                        </div>
-                    </div>
-                    <!-- drikke/kryss-teller -->
-                    <div class="text-right flex-shrink-0 ml-8">
-                        <div class="text-lg sm:text-xl font-saotorpes text-blue-600">
-                            {user.drinkCount}
-                        </div>
-                        <div class="text-xs sm:text-sm font-kalmansk text-black">
-                            {user.drinkCount === 1 ? 'enhet' : 'enheter'}
                         </div>
                     </div>
                     <div class="text-right flex-shrink-0 ml-8">

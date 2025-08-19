@@ -6,7 +6,8 @@ leaderboard
 <script>
     import AllPinsMap from "$lib/components/AllPinsMap.svelte";
     import Countdown from "$lib/components/Countdown.svelte";
-    import Leaderboard from "$lib/components/Leaderboard.svelte";
+    import DrinkLeaderboard from "$lib/components/DrinkLeaderboard.svelte";
+    import KryssLeaderboard from "$lib/components/KryssLeaderboard.svelte";
 </script>
 
 <div class="w-full max-w-2xl mx-auto space-y-8">
@@ -23,7 +24,14 @@ leaderboard
         </div>
     </section>
     <section>
-        <Leaderboard />
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="w-full">
+        <KryssLeaderboard />
+      </div>
+      <div class="w-full">
+        <DrinkLeaderboard />
+      </div>
+    </div>
     </section>
     <section>
         <AllPinsMap />
