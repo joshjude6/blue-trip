@@ -157,7 +157,7 @@
 
 <div class="w-full max-w-3xl mx-auto text-center justify-center mt-8">
   <h3 class="text-2xl text-center font-saotorpes">
-    {userName ? `${userName}` : ''}, dette blir en  
+    {userName ? `${userName}, ` : ''} dette blir en  
   </h3>
   <span class="text-4xl text-blue-600 font-bold transition-colors duration-300 font-saotorpes">{userVibes.join(', ')}</span>
   <h3 class="text-2xl text-center font-saotorpes"> 

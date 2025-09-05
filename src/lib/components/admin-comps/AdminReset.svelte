@@ -276,7 +276,7 @@
                     disabled={loading}
                     class="px-6 py-3 bg-yellow-600 text-white font-kalmansk rounded-lg hover:bg-yellow-700 disabled:bg-gray-400 transition-colors text-base {resetDrinksConfirm ? 'ring-4 ring-yellow-300 bg-yellow-700' : ''}"
                 >
-                    {resetCrossesConfirm ? '⚠️ Klikk igjen for å bekrefte' : 'Nullstill enhet-tellere'}
+                    {resetDrinksConfirm ? '⚠️ Klikk igjen for å bekrefte' : 'Nullstill enhet-tellere'}
                 </button>
             </div>
 

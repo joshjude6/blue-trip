@@ -18,7 +18,7 @@ function DrinkLeaderboard($$payload, $$props) {
 function Horoscope($$payload, $$props) {
   push();
   let userVibes = [";)", ":D", ":P"];
-  $$payload.out.push(`<div class="w-full max-w-3xl mx-auto text-center justify-center mt-8"><h3 class="text-2xl text-center font-saotorpes">${escape_html("")}, dette blir en</h3> <span class="text-4xl text-blue-600 font-bold transition-colors duration-300 font-saotorpes">${escape_html(userVibes.join(", "))}</span> <h3 class="text-2xl text-center font-saotorpes">type dag for deg.</h3> <h3 class="text-xl text-center font-kalmansk">Ikke fornøyd med hvordan dagen din ser ut? Om noen timer endres alt, men husk at du har mest kontroll over din egen skjebne.</h3></div>`);
+  $$payload.out.push(`<div class="w-full max-w-3xl mx-auto text-center justify-center mt-8"><h3 class="text-2xl text-center font-saotorpes">${escape_html("")} dette blir en</h3> <span class="text-4xl text-blue-600 font-bold transition-colors duration-300 font-saotorpes">${escape_html(userVibes.join(", "))}</span> <h3 class="text-2xl text-center font-saotorpes">type dag for deg.</h3> <h3 class="text-xl text-center font-kalmansk">Ikke fornøyd med hvordan dagen din ser ut? Om noen timer endres alt, men husk at du har mest kontroll over din egen skjebne.</h3></div>`);
   pop();
 }
 function KryssLeaderboard($$payload, $$props) {
