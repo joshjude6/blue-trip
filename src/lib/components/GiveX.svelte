@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import { db } from '$lib/api/firebase.js';
     import { onAuthChange } from '$lib/api/auth.js';
-    import { collection, getDoc, getDocs, doc, increment, serverTimestamp, runTransaction } from "firebase/firestore";
+    import { collection, getDoc, getDocs, doc, increment, serverTimestamp, runTransaction, addDoc } from "firebase/firestore";
 
     let users: Array<{
         id: string;
@@ -102,6 +102,25 @@
             return;
         }
 
+        if (amount < 0) {
+            try {
+                const receiverDoc = await getDoc(doc(db, 'users', selectedReceiver));
+                if (receiverDoc.exists()) {
+                    const receiverData = receiverDoc.data();
+                    const currentKryss = receiverData.totalCrosses || 0;
+                    
+                    if (currentKryss < 10) {
+                        message = `Kan ikke gi minus-kryss til noen med mindre enn 10 kryss. ${users.find(u => u.id === selectedReceiver)?.name} har ${currentKryss} kryss.`;
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.error("Error checking receiver's kryss count:", error);
+                message = 'Feil ved sjekking av mottakers kryss. Prøv igjen.';
+                return;
+            }
+        }
+
         loading = true;
         message = '';
 
@@ -132,6 +151,7 @@
                 });
             });
 
+            
             message = `Ga ${amount} kryss til ${receiver?.name}! 🎉`;
             
             // Reset form
@@ -211,7 +231,7 @@
                 });
             });
 
-            message = `🌀 Du, og ${receiver?.name} fikk ingen kryss, men alle andre fikk ett hver 🫧 Cooldown på 1 time starter nå!`;
+            message = `🌀 Du og ${receiver?.name} fikk ingen kryss, men alle andre fikk ett hver 🫧 Cooldown på 1 time starter nå! Misbruk av denne gir 50 kryss 😈`;
             
             cursedCooldown = 60*60;
             cursedTimer = setInterval(() => {

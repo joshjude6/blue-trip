@@ -90,7 +90,7 @@
     async function resetAllDrinks() {
         if (!resetDrinksConfirm) {
             resetDrinksConfirm = true;
-            message = 'Klikk igjen for å bekrefte nullstilling av alle kryss...';
+            message = 'Klikk igjen for å bekrefte nullstilling av alle enheter...';
             setTimeout(() => {
                 resetDrinksConfirm = false;
                 message = '';
@@ -118,7 +118,7 @@
 
             await batch.commit();
             message = `✅ Nullstilt ${updateCount} brukeres enhet-tellere!`;
-            resetCrossesConfirm = false;
+            resetDrinksConfirm = false;
             fetchCounts(); // Refresh counts
 
         } catch (error) {
@@ -222,6 +222,7 @@
 
     function cancelAllConfirmations() {
         resetCrossesConfirm = false;
+        resetDrinksConfirm = false;
         clearLogsConfirm = false;
         resetAllConfirm = false;
         message = 'Alle bekreftelser avbrutt.';
@@ -311,7 +312,7 @@
             </div>
 
             <!-- Cancel All -->
-            {#if resetCrossesConfirm || clearLogsConfirm || resetAllConfirm}
+            {#if resetCrossesConfirm || resetDrinksConfirm || clearLogsConfirm || resetAllConfirm}
                 <div class="text-center">
                     <button 
                         on:click={cancelAllConfirmations}
