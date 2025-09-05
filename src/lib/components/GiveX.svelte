@@ -15,6 +15,8 @@
     let loading = false;
     let message = '';
     let authLoading = true;
+    let cursedCooldown = 0;
+    let cursedTimer: NodeJS.Timeout | null = null;
 
     // Custom event to notify parent of new kryss
     import { createEventDispatcher } from 'svelte';
@@ -53,9 +55,14 @@
         }
     });
 
-    return () => unsubscribe();
+    // Cleanup timer on component destroy
+    return () => {
+        unsubscribe();
+        if (cursedTimer) {
+            clearInterval(cursedTimer);
+        }
+    };
     });
-
 
     async function fetchUsers() {
         try {
@@ -90,8 +97,8 @@
             return;
         }
 
-        if (amount < 1 || amount > 10) {
-            message = 'Mengde må være mellom 1 og 10.';
+        if (amount < -10 || amount > 10) {
+            message = 'Mengde må være mellom -10 og 10.';
             return;
         }
 
@@ -150,6 +157,86 @@
             loading = false;
             // Clear message after 5 seconds
             setTimeout(() => message = '', 5000);
+        }
+    }
+
+    async function cursedMinusKryss() {
+        if (!currentUser) {
+            message = 'Du må være logget inn for å kunne gi cursed minus-kryss.';
+            return;
+        }
+
+        if (!selectedReceiver || !reason.trim()) {
+            message = 'Velg en mottaker og gi en grunn.';
+            return;
+        }
+
+        if (cursedCooldown > 0) {
+            message = `Du må vente ${cursedCooldown} sekunder før du kan bruke cursed minus-kryss igjen.`;
+            return;
+        }
+
+        loading = true;
+        message = '';
+
+        try {
+            const receiver = users.find(u => u.id === selectedReceiver);
+            const giverName = currentUser.fornavn || 'Unknown';
+
+            // Get all users except current user and selected receiver
+            const othersToReward = users.filter(u => u.id !== selectedReceiver);
+
+            await runTransaction(db, async (transaction) => {
+                // Create a single log entry for the cursed action
+                const kryssLogRef = doc(collection(db, 'kryssLog'));
+                
+                // Add cursed action to kryss log
+                transaction.set(kryssLogRef, {
+                    giverId: currentUser.uid,
+                    giverName: giverName,
+                    receiverId: selectedReceiver,
+                    receiverName: receiver?.name || 'Unknown',
+                    reason: `🌀 Cursed: ${reason.trim()}`,
+                    amount: 0, // The cursed person doesn't get anything
+                    timestamp: serverTimestamp(),
+                    cursed: true
+                });
+
+                // Give 1 kryss to everyone else (no individual log entries)
+                othersToReward.forEach(user => {
+                    const userRef = doc(db, 'users', user.id);
+                    transaction.update(userRef, {
+                        totalCrosses: increment(1)
+                    });
+                });
+            });
+
+            message = `🌀 Du, og ${receiver?.name} fikk ingen kryss, men alle andre fikk ett hver 🫧 Cooldown på 1 time starter nå!`;
+            
+            cursedCooldown = 60*60;
+            cursedTimer = setInterval(() => {
+                cursedCooldown--;
+                if (cursedCooldown <= 0) {
+                    clearInterval(cursedTimer!);
+                    cursedTimer = null;
+                }
+            }, 1000);
+
+            // Reset form
+            selectedReceiver = '';
+            reason = '';
+            amount = 1;
+
+            // Notify parent components to refresh
+            dispatch('kryssGiven');
+
+        } catch (error) {
+            console.error("Error with cursed minus-kryss:", error);
+            message = 'Feil ved cursed minus-kryss. Prøv igjen.';
+        } finally {
+            loading = false;
+            // Clear message after 8 seconds (longer for cursed message)
+            setTimeout(() => message = '', 8000);
         }
     }
 </script>
@@ -211,7 +298,7 @@
                         id="amount"
                         type="number"
                         bind:value={amount}
-                        min="1"
+                        min="-10"
                         max="10"
                         class="w-20 p-3 border border-gray-300 rounded-lg font-kalmansk text-base sm:text-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent text-center"
                         required
@@ -236,13 +323,24 @@
                 </div>
             {/if}
 
-            <button 
-                type="submit"
-                disabled={loading || !selectedReceiver || !reason.trim()}
-                class="w-full py-3 px-6 bg-blue-600 text-white font-kalmansk rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base sm:text-lg"
-            >
-                {loading ? 'Gir kryss...' : `Gi ${amount} kryss`}
-            </button>
+            <div class="space-y-3">
+                <button 
+                    type="submit"
+                    disabled={loading || !selectedReceiver || !reason.trim()}
+                    class="w-full py-3 px-6 bg-blue-600 text-white font-kalmansk rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base sm:text-lg"
+                >
+                    {loading ? 'Gir kryss...' : `Gi ${amount} kryss`}
+                </button>
+
+                <button 
+                    type="button"
+                    on:click={cursedMinusKryss}
+                    disabled={loading || !selectedReceiver || !reason.trim() || cursedCooldown > 0}
+                    class="w-full py-3 px-6 bg-purple-600 text-white font-kalmansk rounded-lg hover:bg-purple-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base sm:text-lg"
+                >
+                    {cursedCooldown > 0 ? `Cursed cooldown: ${cursedCooldown}s` : '🌀 Cursed minus-kryss'}
+                </button>
+            </div>
         </form>
     {/if}
 </div>

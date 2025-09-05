@@ -7,21 +7,23 @@
   import { doc, getDoc } from 'firebase/firestore';
 
   const translations = [
-    'blå', 
-    'blue', 
-    'blau',
-    '青い',
-    'azul',
-    '파란색',
-    'modrá',
-    'μπλε',
-    'sininen',
-    'plava',
-    'kék',     
-    'zils',     
-    'mavi',
-    '蓝色'      
-  ];
+  'siste',
+  'last',        // English
+  'letzte',      // German
+  'último',      // Spanish
+  'dernier',     // French
+  '最後',          // Japanese (saigo)
+  '마지막',        // Korean (majimak)
+  'poslední',    // Czech
+  'τελευταίος',   // Greek (telefteos)
+  'viimeinen',   // Finnish
+  'zadnji',      // Croatian/Slovenian
+  'utolsó',      // Hungarian
+  'pēdējais',    // Latvian
+  'son',         // Turkish
+  '最后',          // Chinese (zuìhòu)
+];
+
 
   let index = 0;
   let currentWord = translations[index];
@@ -51,7 +53,7 @@
 
 
 <div class="w-full text-center flex justify-center mt-8">
-  <h1 class="text-5xl text-center font-saotorpes">klar for <span class="text-blue-600 font-bold transition-colors duration-300">{currentWord}</span>tur{#if userName}, {userName}{/if}?</h1>
+  <h1 class="text-5xl text-center font-saotorpes">klar for ditt <span class="text-blue-600 font-bold transition-colors duration-300">{currentWord}</span> år{#if userName}, {userName}{/if}?</h1>
 </div>
 
 <style>

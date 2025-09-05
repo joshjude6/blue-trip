@@ -33,7 +33,7 @@
 
     <p class="font-kalmansk max-w-xl mx-auto text-black text-base sm:text-lg leading-relaxed text-center">
         På denne siden kan dere melde kryss på hverandre! Nederst på siden er det en logg med alle kryss, og grunnene til hvorfor vedkommende fikk kryssene sine. 
-        Husk å være generøse med kryssene! Sharing is caring, som man sier. Straffen for et kryss vet vi ikke enda - hva tenker dere?
+        Husk å være generøse med kryssene! Sharing is caring, som man sier.
     </p>
 
     <!-- Chart Section -->

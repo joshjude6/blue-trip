@@ -11,6 +11,8 @@
         amount: number;
         timestamp: any;
         formattedTime: string;
+        cursed?: boolean;
+
     }> = [];
     let loading = true;
     let error: string | null = null;
@@ -52,7 +54,8 @@
                     reason: data.reason || 'Ingen grunn oppgitt',
                     amount: data.amount || 1,
                     timestamp: data.timestamp,
-                    formattedTime
+                    formattedTime,
+                    cursed: data.cursed || false
                 });
             });
             
@@ -133,7 +136,7 @@
                                 {entry.receiverName}
                             </span>
                         </div>
-                        <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm font-kalmansk">
+                        <span class="px-2 py-1 rounded text-sm font-kalmansk {entry.cursed ? 'bg-purple-600 text-white' : entry.amount < 0 ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}">
                             {entry.amount}x
                         </span>
                     </div>
@@ -174,7 +177,7 @@
                                 </span>
                             </td>
                             <td class="py-3 px-2 text-center">
-                                <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm font-kalmansk">
+                                <span class="px-2 py-1 rounded text-sm font-kalmansk {entry.cursed ? 'bg-purple-600 text-white' : entry.amount < 0 ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}">
                                     {entry.amount}x
                                 </span>
                             </td>

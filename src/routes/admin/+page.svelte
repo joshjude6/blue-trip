@@ -1,7 +1,10 @@
 <script>
-    import AdminDeleteUser from "$lib/components/AdminDeleteUser.svelte";
-    import AdminReset from "$lib/components/AdminReset.svelte";
+    import AdminCursedRev from "$lib/components/admin-comps/AdminCursedRev.svelte";
+    import AdminDeleteUser from "$lib/components/admin-comps/AdminDeleteUser.svelte";
+    import AdminReset from "$lib/components/admin-comps/AdminReset.svelte";
+
 
 </script>
 <AdminReset />
 <AdminDeleteUser />
+<AdminCursedRev />

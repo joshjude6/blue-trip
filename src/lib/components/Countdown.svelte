@@ -30,6 +30,6 @@
 
 <div class="w-full text-center flex justify-center mt-8">
   <h2 class="text-3xl font-saotorpes text-center">
-    Det er <span class="text-blue-600 font-bold">{timeLeft}</span> til blåtur!
+    <span class="text-blue-600 font-bold">{timeLeft}</span>
   </h2>
 </div>

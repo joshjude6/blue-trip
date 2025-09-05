@@ -2,6 +2,7 @@
     import DrinkTracker from "$lib/components/DrinkTracker.svelte";
     import Profilepic from "$lib/components/Profilepic.svelte";
     import ShowUserKryss from "$lib/components/ShowUserKryss.svelte";
+    import UserInfo from "$lib/components/UserInfo.svelte";
     import UserMap from "$lib/components/UserMap.svelte";
 </script>
 
@@ -27,6 +28,6 @@
         <DrinkTracker />
     </section>
     <section>
-        <UserMap />
+        <UserInfo />
     </section>
 </div>

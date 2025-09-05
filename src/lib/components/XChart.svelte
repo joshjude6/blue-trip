@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { db } from '$lib/api/firebase.js';
-    import { collection, getDocs, query, orderBy } from "firebase/firestore";
+    import { collection, getDoc, doc, getDocs, query, orderBy } from "firebase/firestore";
 
     let users: Array<{
         id: string;
@@ -11,6 +11,16 @@
     let loading = true;
     let error: string | null = null;
     let maxCrosses = 0;
+
+    // In your chart component
+    async function getCurrentPeriodStart() {
+        const settingsDoc = await getDoc(doc(db, 'settings', 'archive'));
+        if (settingsDoc.exists()) {
+            const data = settingsDoc.data();
+            return data.currentPeriodStart?.toDate() || null;
+        }
+        return null;
+    }
 
     async function fetchUsers() {
         try {
@@ -102,14 +112,14 @@
         </div>
     {:else}
         <!-- Bar Chart -->
-        <div class="bg-gray-50 rounded-lg p-4 mb-4">
-            <div class="flex items-end justify-center space-x-2 sm:space-x-4 h-48 sm:h-64">
+        <div class="bg-gray-50 rounded-lg p-4 mb-4 overflow-x-auto">
+            <div class="flex items-end justify-center space-x-2 sm:space-x-4 h-48 sm:h-64 min-w-max">
                 {#each users as user, index}
-                    <div class="flex flex-col items-center space-y-2">
+                    <div class="flex flex-col items-center space-y-2 min-w-[60px]">
                         <!-- Bar -->
                         <div class="flex flex-col justify-end h-32 sm:h-48">
                             <div 
-                                class="{getBarColor(index)} rounded-t transition-all duration-500 ease-out min-w-8 sm:min-w-12 flex items-end justify-center pb-1"
+                                class="{getBarColor(index)} rounded-t transition-all duration-500 ease-out w-12 sm:w-16 flex items-end justify-center pb-1"
                                 style="height: {getBarHeight(user.totalCrosses)}%;"
                             >
                                 {#if user.totalCrosses > 0}
@@ -121,8 +131,8 @@
                         </div>
                         
                         <!-- User Name -->
-                        <div class="text-center">
-                            <span class="text-sm sm:text-base font-kalmansk text-black font-semibold">
+                        <div class="text-center w-full">
+                            <span class="text-sm sm:text-base font-kalmansk text-black font-semibold block whitespace-nowrap">
                                 {user.name}
                             </span>
                         </div>

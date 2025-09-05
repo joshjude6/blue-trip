@@ -1,0 +1,118 @@
+[debug] [2025-08-19T11:00:23.227Z] ----------------------------------------------------------------------
+[debug] [2025-08-19T11:00:23.229Z] Command:       /opt/homebrew/Cellar/node/24.5.0/bin/node /opt/homebrew/bin/firebase deploy
+[debug] [2025-08-19T11:00:23.229Z] CLI Version:   14.12.1
+[debug] [2025-08-19T11:00:23.229Z] Platform:      darwin
+[debug] [2025-08-19T11:00:23.229Z] Node Version:  v24.5.0
+[debug] [2025-08-19T11:00:23.229Z] Time:          Tue Aug 19 2025 13:00:23 GMT+0200 (Central European Summer Time)
+[debug] [2025-08-19T11:00:23.229Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-08-19T11:00:23.308Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-08-19T11:00:23.308Z] > authorizing via signed-in user (joshjude6@gmail.com)
+[debug] [2025-08-19T11:00:23.308Z] [iam] checking project blue-trip for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2025-08-19T11:00:23.308Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:00:23.308Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:00:23.309Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/blue-trip:testIamPermissions [none]
+[debug] [2025-08-19T11:00:23.309Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/blue-trip:testIamPermissions x-goog-quota-user=projects/blue-trip
+[debug] [2025-08-19T11:00:23.309Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/blue-trip:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-08-19T11:00:24.117Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/blue-trip:testIamPermissions 200
+[debug] [2025-08-19T11:00:24.117Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/blue-trip:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-08-19T11:00:24.118Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:00:24.118Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:00:24.118Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/blue-trip [none]
+[debug] [2025-08-19T11:00:24.436Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/blue-trip 200
+[debug] [2025-08-19T11:00:24.436Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/blue-trip {"projectId":"blue-trip","projectNumber":"546185706998","displayName":"blue-trip","name":"projects/blue-trip","resources":{"hostingSite":"blue-trip"},"state":"ACTIVE","etag":"1_e0de511d-fd23-432e-b432-be4a900aad95"}
+[debug] [2025-08-19T11:00:25.149Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:00:25.149Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:00:25.149Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/blue-trip/sites pageToken=&pageSize=10
+[debug] [2025-08-19T11:00:26.119Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/blue-trip/sites 200
+[debug] [2025-08-19T11:00:26.120Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/blue-trip/sites {"sites":[{"name":"projects/blue-trip/sites/blue-trip","defaultUrl":"https://blue-trip.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2025-08-19T11:00:26.121Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:00:26.121Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:00:26.121Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/blue-trip/sites 
+[debug] [2025-08-19T11:00:26.362Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/blue-trip/sites 200
+[debug] [2025-08-19T11:00:26.363Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/blue-trip/sites {"sites":[{"name":"projects/blue-trip/sites/blue-trip","defaultUrl":"https://blue-trip.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2025-08-19T11:00:26.363Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:00:26.363Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:00:26.363Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/blue-trip/webApps/-/config [none]
+[debug] [2025-08-19T11:00:26.762Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/blue-trip/webApps/-/config 200
+[debug] [2025-08-19T11:00:26.763Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/blue-trip/webApps/-/config {"projectId":"blue-trip","storageBucket":"blue-trip.firebasestorage.app","apiKey":"AIzaSyAdNX5w10w62U409INArUAzMEUk1ElHNO8","authDomain":"blue-trip.firebaseapp.com","messagingSenderId":"546185706998"}
+[info] 
+   Thank you for trying our experimental support for SvelteKit on Firebase Hosting.
+   While this integration is maintained by Googlers it is not a supported Firebase product.
+   Issues filed on GitHub will be addressed on a best-effort basis by maintainers and other community members.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/frameworks-overview
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[warn] ⚠  This integration expects Node version 16, 18, or 20. You're running version 24, problems may be encountered. 
+[debug] [2025-08-19T11:00:36.589Z] Error: Command failed: npm i --omit dev --no-audit
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:924:11)
+    at execSync (node:child_process:996:15)
+    at prepareFrameworks (/opt/homebrew/lib/node_modules/firebase-tools/lib/frameworks/index.js:373:42)
+    at async deploy (/opt/homebrew/lib/node_modules/firebase-tools/lib/deploy/index.js:78:9)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2025-08-19T11:02:02.202Z] ----------------------------------------------------------------------
+[debug] [2025-08-19T11:02:02.203Z] Command:       /opt/homebrew/Cellar/node/24.5.0/bin/node /opt/homebrew/bin/firebase deploy
+[debug] [2025-08-19T11:02:02.203Z] CLI Version:   14.12.1
+[debug] [2025-08-19T11:02:02.203Z] Platform:      darwin
+[debug] [2025-08-19T11:02:02.203Z] Node Version:  v24.5.0
+[debug] [2025-08-19T11:02:02.204Z] Time:          Tue Aug 19 2025 13:02:02 GMT+0200 (Central European Summer Time)
+[debug] [2025-08-19T11:02:02.204Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-08-19T11:02:02.294Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-08-19T11:02:02.294Z] > authorizing via signed-in user (joshjude6@gmail.com)
+[debug] [2025-08-19T11:02:02.294Z] [iam] checking project blue-trip for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2025-08-19T11:02:02.294Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:02:02.294Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:02:02.295Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/blue-trip:testIamPermissions [none]
+[debug] [2025-08-19T11:02:02.295Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/blue-trip:testIamPermissions x-goog-quota-user=projects/blue-trip
+[debug] [2025-08-19T11:02:02.295Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/blue-trip:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-08-19T11:02:03.146Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/blue-trip:testIamPermissions 200
+[debug] [2025-08-19T11:02:03.146Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/blue-trip:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-08-19T11:02:03.147Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:02:03.147Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:02:03.148Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/blue-trip [none]
+[debug] [2025-08-19T11:02:03.522Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/blue-trip 200
+[debug] [2025-08-19T11:02:03.523Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/blue-trip {"projectId":"blue-trip","projectNumber":"546185706998","displayName":"blue-trip","name":"projects/blue-trip","resources":{"hostingSite":"blue-trip"},"state":"ACTIVE","etag":"1_e0de511d-fd23-432e-b432-be4a900aad95"}
+[debug] [2025-08-19T11:02:04.203Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:02:04.203Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:02:04.203Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/blue-trip/sites pageToken=&pageSize=10
+[debug] [2025-08-19T11:02:05.176Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/blue-trip/sites 200
+[debug] [2025-08-19T11:02:05.176Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/blue-trip/sites {"sites":[{"name":"projects/blue-trip/sites/blue-trip","defaultUrl":"https://blue-trip.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2025-08-19T11:02:05.177Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:02:05.177Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:02:05.177Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/blue-trip/sites 
+[debug] [2025-08-19T11:02:05.493Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/blue-trip/sites 200
+[debug] [2025-08-19T11:02:05.494Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/blue-trip/sites {"sites":[{"name":"projects/blue-trip/sites/blue-trip","defaultUrl":"https://blue-trip.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2025-08-19T11:02:05.494Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:02:05.494Z] Checked if tokens are valid: true, expires at: 1755603035774
+[debug] [2025-08-19T11:02:05.494Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/blue-trip/webApps/-/config [none]
+[debug] [2025-08-19T11:02:06.249Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/blue-trip/webApps/-/config 200
+[debug] [2025-08-19T11:02:06.249Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/blue-trip/webApps/-/config {"projectId":"blue-trip","storageBucket":"blue-trip.firebasestorage.app","apiKey":"AIzaSyAdNX5w10w62U409INArUAzMEUk1ElHNO8","authDomain":"blue-trip.firebaseapp.com","messagingSenderId":"546185706998"}
+[info] 
+   Thank you for trying our experimental support for SvelteKit on Firebase Hosting.
+   While this integration is maintained by Googlers it is not a supported Firebase product.
+   Issues filed on GitHub will be addressed on a best-effort basis by maintainers and other community members.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/frameworks-overview
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[warn] ⚠  This integration expects Node version 16, 18, or 20. You're running version 24, problems may be encountered. 
+[debug] [2025-08-19T11:02:11.304Z] Error: Command failed: npm i --omit dev --no-audit
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:924:11)
+    at execSync (node:child_process:996:15)
+    at prepareFrameworks (/opt/homebrew/lib/node_modules/firebase-tools/lib/frameworks/index.js:373:42)
+    at async deploy (/opt/homebrew/lib/node_modules/firebase-tools/lib/deploy/index.js:78:9)
+[error] 
+[error] Error: An unexpected error has occurred.

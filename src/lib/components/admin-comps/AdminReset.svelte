@@ -14,6 +14,7 @@
 
 
     let resetCrossesConfirm = false;
+    let resetDrinksConfirm = false;
     let clearLogsConfirm = false;
     let resetAllConfirm = false;
 
@@ -80,6 +81,49 @@
         } catch (error) {
             console.error("Error resetting crosses:", error);
             message = '❌ Feil ved nullstilling av kryss.';
+        } finally {
+            loading = false;
+            setTimeout(() => message = '', 5000);
+        }
+    }
+
+    async function resetAllDrinks() {
+        if (!resetDrinksConfirm) {
+            resetDrinksConfirm = true;
+            message = 'Klikk igjen for å bekrefte nullstilling av alle kryss...';
+            setTimeout(() => {
+                resetDrinksConfirm = false;
+                message = '';
+            }, 5000);
+            return;
+        }
+
+        loading = true;
+        message = '';
+
+        try {
+            const usersSnapshot = await getDocs(collection(db, 'users'));
+            const batch = writeBatch(db);
+
+            let updateCount = 0;
+            usersSnapshot.forEach((userDoc) => {
+                const userData = userDoc.data();
+                if (userData.drinkCount && userData.drinkCount > 0) {
+                    batch.update(doc(db, 'users', userDoc.id), {
+                        drinkCount: 0
+                    });
+                    updateCount++;
+                }
+            });
+
+            await batch.commit();
+            message = `✅ Nullstilt ${updateCount} brukeres enhet-tellere!`;
+            resetCrossesConfirm = false;
+            fetchCounts(); // Refresh counts
+
+        } catch (error) {
+            console.error("Error resetting drinks:", error);
+            message = '❌ Feil ved nullstilling av enheter.';
         } finally {
             loading = false;
             setTimeout(() => message = '', 5000);
@@ -216,9 +260,9 @@
         <div class="space-y-4">
             <!-- Reset Crosses Only -->
             <div class="border border-yellow-300 rounded-lg p-4 bg-yellow-50">
-                <h3 class="font-saotorpes text-lg text-yellow-800 mb-2">Nullstill bare kryss-tellere</h3>
+                <h3 class="font-saotorpes text-lg text-yellow-800 mb-2">Nullstill bare kryss-tellere/enhet-tellere</h3>
                 <p class="font-kalmansk text-base text-yellow-700 mb-4">
-                    Setter alle brukeres totalCrosses til 0. Beholder historikken.
+                    Setter alle brukeres totalCrosses/drinkCount til 0. Beholder historikken for kryss.
                 </p>
                 <button 
                     on:click={resetAllCrosses}
@@ -226,6 +270,13 @@
                     class="px-6 py-3 bg-yellow-600 text-white font-kalmansk rounded-lg hover:bg-yellow-700 disabled:bg-gray-400 transition-colors text-base {resetCrossesConfirm ? 'ring-4 ring-yellow-300 bg-yellow-700' : ''}"
                 >
                     {resetCrossesConfirm ? '⚠️ Klikk igjen for å bekrefte' : 'Nullstill kryss-tellere'}
+                </button>
+                <button 
+                    on:click={resetAllDrinks}
+                    disabled={loading}
+                    class="px-6 py-3 bg-yellow-600 text-white font-kalmansk rounded-lg hover:bg-yellow-700 disabled:bg-gray-400 transition-colors text-base {resetDrinksConfirm ? 'ring-4 ring-yellow-300 bg-yellow-700' : ''}"
+                >
+                    {resetCrossesConfirm ? '⚠️ Klikk igjen for å bekrefte' : 'Nullstill enhet-tellere'}
                 </button>
             </div>
 

@@ -105,7 +105,7 @@
             
             marker.bindPopup(`
                 <div style="text-align: center; min-width: 150px; font-family: 'kalmansk';">
-                    <strong style="color: ${color};">${pin.name}'s gjetning</strong><br>
+                    <strong style="color: ${color};">${pin.name}'s gjett</strong><br>
                     <small>📅 ${timestamp}</small><br>
                     <small>📍 ${pin.lat.toFixed(4)}, ${pin.lng.toFixed(4)}</small>
                 </div>
@@ -165,7 +165,7 @@
 
 <div class="w-full bg-white rounded-lg shadow-lg p-4 sm:p-6">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black">🗺️ Hvor tror dere vi skal?</h2>
+        <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black">🗺️ Hvor trodde dere vi skulle?</h2>
         <button 
             on:click={fetchAllPins}
             disabled={loading}
@@ -190,7 +190,7 @@
     {#if allPins.length > 0}
         <div class="mb-4 p-4 bg-blue-50 rounded-lg">
             <h3 class="font-saotorpes font-semibold text-blue-600 mb-2 text-base">
-                Gjetninger på kartet ({allPins.length}):
+                Gjett på kartet ({allPins.length}):
             </h3>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 text-sm">
                 {#each allPins as pin, index}
@@ -199,7 +199,9 @@
                             class="w-4 h-4 rounded-full border border-gray-400 flex-shrink-0"
                             style="background-color: {pinColors[index % pinColors.length]};"
                         ></div>
-                        <span class="font-kalmansk text-black truncate">{pin.name}</span>
+                        <span class="font-kalmansk text-black text-lg truncate">
+                            {pin.name} {#if pin.name === 'Martin'}👑 - Nærmest gjett!{/if} {#if pin.name === 'Tora'}🥈 - naila det før hun bytta 👎{/if}
+                        </span>
                     </div>
                 {/each}
             </div>
