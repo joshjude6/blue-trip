@@ -1,5 +1,5 @@
 import "clsx";
-import { k as bind_props, c as pop, p as push, f as attr, e as escape_html, h as head } from "../../../chunks/index.js";
+import { K as bind_props, v as pop, t as push, z as attr, w as escape_html } from "../../../chunks/index2.js";
 import { a as auth, s as storage } from "../../../chunks/firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
 import "firebase/firestore";
@@ -12,12 +12,12 @@ function DrinkTracker($$payload, $$props) {
   function refresh() {
     fetchUserData();
   }
-  $$payload.out += `<div class="w-full max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-4 sm:p-6"><h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black mb-4">🍺 Drikketeller</h2> `;
+  $$payload.out.push(`<div class="w-full max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-4 sm:p-6"><h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black mb-4">🍺 Drikketeller</h2> `);
   {
-    $$payload.out += "<!--[-->";
-    $$payload.out += `<div class="text-center py-6"><div class="animate-pulse font-kalmansk text-black text-base">Laster...</div></div>`;
+    $$payload.out.push("<!--[-->");
+    $$payload.out.push(`<div class="text-center py-6"><div class="animate-pulse font-kalmansk text-black text-base">Laster...</div></div>`);
   }
-  $$payload.out += `<!--]--></div>`;
+  $$payload.out.push(`<!--]--></div>`);
   bind_props($$props, { refresh });
   pop();
 }
@@ -37,19 +37,19 @@ function Profilepic($$payload, $$props) {
       }
     }
   });
-  $$payload.out += `<div class="flex flex-col items-center gap-4 my-8"><div class="w-40 h-40 rounded-full bg-gray-100 shadow-inner overflow-hidden flex items-center justify-center text-gray-400 text-3xl">`;
+  $$payload.out.push(`<div class="flex flex-col items-center gap-4 my-8"><div class="w-40 h-40 rounded-full bg-gray-100 shadow-inner overflow-hidden flex items-center justify-center text-gray-400 text-3xl">`);
   if (profileUrl) {
-    $$payload.out += "<!--[-->";
-    $$payload.out += `<img${attr("src", profileUrl)} alt="Profilbilde" class="object-cover w-full h-full"/>`;
+    $$payload.out.push("<!--[-->");
+    $$payload.out.push(`<img${attr("src", profileUrl)} alt="Profilbilde" class="object-cover w-full h-full"/>`);
   } else {
-    $$payload.out += "<!--[!-->";
-    $$payload.out += `?`;
+    $$payload.out.push("<!--[!-->");
+    $$payload.out.push(`?`);
   }
-  $$payload.out += `<!--]--></div> <input type="file" accept="image/*" id="fileInput" class="hidden"/> <label for="fileInput" class="cursor-pointer bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition font-kalmansk">Velg profilbilde</label> `;
+  $$payload.out.push(`<!--]--></div> <input type="file" accept="image/*" id="fileInput" class="hidden"/> <label for="fileInput" class="cursor-pointer bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition font-kalmansk">Velg profilbilde</label> `);
   {
-    $$payload.out += "<!--[!-->";
+    $$payload.out.push("<!--[!-->");
   }
-  $$payload.out += `<!--]--> <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow font-kalmansk"${attr("disabled", uploading, true)}>${escape_html("Last opp / Endre profilbilde")}</button></div>`;
+  $$payload.out.push(`<!--]--> <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow font-kalmansk"${attr("disabled", uploading, true)}>${escape_html("Last opp / Endre profilbilde")}</button></div>`);
   pop();
 }
 function ShowUserKryss($$payload, $$props) {
@@ -60,38 +60,35 @@ function ShowUserKryss($$payload, $$props) {
   function refresh() {
     fetchUserData();
   }
-  $$payload.out += `<div class="w-full bg-white rounded-lg shadow-lg p-4 sm:p-6"><h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black mb-4">❌ Dine kryss</h2> `;
+  $$payload.out.push(`<div class="w-full bg-white rounded-lg shadow-lg p-4 sm:p-6"><h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black mb-4">❌ Dine kryss</h2> `);
   {
-    $$payload.out += "<!--[-->";
-    $$payload.out += `<div class="text-center py-6"><div class="animate-pulse font-kalmansk text-black text-base">Laster...</div></div>`;
+    $$payload.out.push("<!--[-->");
+    $$payload.out.push(`<div class="text-center py-6"><div class="animate-pulse font-kalmansk text-black text-base">Laster...</div></div>`);
   }
-  $$payload.out += `<!--]--></div>`;
+  $$payload.out.push(`<!--]--></div>`);
   bind_props($$props, { refresh });
   pop();
 }
-function UserMap($$payload, $$props) {
+function UserInfo($$payload, $$props) {
   push();
-  head($$payload, ($$payload2) => {
-    $$payload2.out += `<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>`;
-  });
-  $$payload.out += `<div class="w-full bg-white rounded-lg shadow-lg p-4 sm:p-6"><h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black mb-4">🗺️ Plasser din pin</h2> <p class="font-kalmansk text-black text-base mb-4">Klikk på kartet hvor du tror vi skal på blåtur!</p> `;
+  $$payload.out.push(`<div class="w-full bg-white rounded-lg shadow-lg p-4 sm:p-6"><h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black mb-6">⚙️ Kontoinnstillinger</h2> `);
   {
-    $$payload.out += "<!--[-->";
-    $$payload.out += `<div class="text-center py-6"><div class="animate-pulse font-kalmansk text-black text-base">Laster...</div></div>`;
+    $$payload.out.push("<!--[-->");
+    $$payload.out.push(`<div class="text-center py-6"><div class="animate-pulse font-kalmansk text-black text-base">Laster inn...</div></div>`);
   }
-  $$payload.out += `<!--]--></div>`;
+  $$payload.out.push(`<!--]--></div>`);
   pop();
 }
 function _page($$payload) {
-  $$payload.out += `<div class="text-center px-4"><h1 class="text-2xl sm:text-3xl font-saotorpes font-bold text-black mb-2 mt-8">Brukerside</h1></div> <p class="font-kalmansk text-black text-base sm:text-lg leading-relaxed text-center">Her kan du se hvor mange kryss du har, registrere enheter du har drukket, og gjette hvor vi skal.</p> <div class="w-full max-w-2xl mx-auto space-y-8"><section>`;
+  $$payload.out.push(`<div class="text-center px-4"><h1 class="text-2xl sm:text-3xl font-saotorpes font-bold text-black mb-2 mt-8">Brukerside</h1></div> <p class="font-kalmansk text-black text-base sm:text-lg leading-relaxed text-center">Her kan du se hvor mange kryss du har, registrere enheter du har drukket, og gjette hvor vi skal.</p> <div class="w-full max-w-2xl mx-auto space-y-8"><section>`);
   Profilepic($$payload);
-  $$payload.out += `<!----></section> <section>`;
+  $$payload.out.push(`<!----></section> <section>`);
   ShowUserKryss($$payload, {});
-  $$payload.out += `<!----></section> <section>`;
+  $$payload.out.push(`<!----></section> <section>`);
   DrinkTracker($$payload, {});
-  $$payload.out += `<!----></section> <section>`;
-  UserMap($$payload);
-  $$payload.out += `<!----></section></div>`;
+  $$payload.out.push(`<!----></section> <section>`);
+  UserInfo($$payload);
+  $$payload.out.push(`<!----></section></div>`);
 }
 export {
   _page as default

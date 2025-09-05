@@ -10,7 +10,7 @@ return {
 	assets: new Set(["favicon.png","fonts/Kalmansk-Regular.otf","fonts/SaoTorpes.otf"]),
 	mimeTypes: {".png":"image/png",".otf":"font/otf"},
 	_: {
-		client: {start:"_app/immutable/entry/start.DTBwjvu5.js",app:"_app/immutable/entry/app.DtdC90ZK.js",imports:["_app/immutable/entry/start.DTBwjvu5.js","_app/immutable/chunks/CZ0F4_i_.js","_app/immutable/chunks/Co216k44.js","_app/immutable/entry/app.DtdC90ZK.js","_app/immutable/chunks/CB_6scbe.js","_app/immutable/chunks/Co216k44.js","_app/immutable/chunks/DqAD-f_b.js","_app/immutable/chunks/DGlzIWkq.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
+		client: {start:"_app/immutable/entry/start.CgS_t_yw.js",app:"_app/immutable/entry/app.CxCPWhNx.js",imports:["_app/immutable/entry/start.CgS_t_yw.js","_app/immutable/chunks/ieCNm28Z.js","_app/immutable/chunks/CfhvDfvo.js","_app/immutable/chunks/DIeogL5L.js","_app/immutable/entry/app.CxCPWhNx.js","_app/immutable/chunks/8FegQ23V.js","_app/immutable/chunks/CfhvDfvo.js","_app/immutable/chunks/DIeogL5L.js","_app/immutable/chunks/Bzak7iHL.js","_app/immutable/chunks/B_-pLn03.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
 		nodes: [
 			__memo(() => import('./nodes/0.js')),
 			__memo(() => import('./nodes/1.js')),
@@ -18,8 +18,13 @@ return {
 			__memo(() => import('./nodes/3.js')),
 			__memo(() => import('./nodes/4.js')),
 			__memo(() => import('./nodes/5.js')),
-			__memo(() => import('./nodes/6.js'))
+			__memo(() => import('./nodes/6.js')),
+			__memo(() => import('./nodes/7.js')),
+			__memo(() => import('./nodes/8.js'))
 		],
+		remotes: {
+			
+		},
 		routes: [
 			{
 				id: "/",
@@ -36,24 +41,38 @@ return {
 				endpoint: null
 			},
 			{
+				id: "/blue",
+				pattern: /^\/blue\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 4 },
+				endpoint: null
+			},
+			{
+				id: "/history",
+				pattern: /^\/history\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 5 },
+				endpoint: null
+			},
+			{
 				id: "/kryss",
 				pattern: /^\/kryss\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 4 },
+				page: { layouts: [0,], errors: [1,], leaf: 6 },
 				endpoint: null
 			},
 			{
 				id: "/login",
 				pattern: /^\/login\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 5 },
+				page: { layouts: [0,], errors: [1,], leaf: 7 },
 				endpoint: null
 			},
 			{
 				id: "/user",
 				pattern: /^\/user\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 6 },
+				page: { layouts: [0,], errors: [1,], leaf: 8 },
 				endpoint: null
 			}
 		],
