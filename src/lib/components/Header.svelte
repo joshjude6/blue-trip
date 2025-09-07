@@ -15,11 +15,9 @@
   '最後',          // Japanese (saigo)
   '마지막',        // Korean (majimak)
   'poslední',    // Czech
-  'τελευταίος',   // Greek (telefteos)
   'viimeinen',   // Finnish
   'zadnji',      // Croatian/Slovenian
   'utolsó',      // Hungarian
-  'pēdējais',    // Latvian
   'son',         // Turkish
   '最后',          // Chinese (zuìhòu)
 ];
@@ -52,7 +50,7 @@
 
 
 
-<div class="w-full text-center flex justify-center mt-8">
+<div class="w-full text-center flex justify-center pt-8">
   <h1 class="text-5xl text-center font-saotorpes">klar for ditt <span class="text-blue-600 font-bold transition-colors duration-300">{currentWord}</span> år{#if userName}, {userName}{/if}?</h1>
 </div>
 

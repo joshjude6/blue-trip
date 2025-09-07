@@ -27,35 +27,35 @@
     <li>
       <a
         href="/"
-        class="bg-white text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-white transition flex items-center justify-center"
+        class="bg-blue-100 text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-blue-100 transition flex items-center justify-center"
         >Hjem</a
       >
     </li>
     <li>
       <a
         href="/login"
-        class="bg-white text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-white transition flex items-center justify-center"
+        class="bg-blue-100 text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-blue-100 transition flex items-center justify-center"
         >Logg inn</a
       >
     </li>
     <li>
       <a
         href="/user"
-        class="bg-white text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-white transition flex items-center justify-center"
+        class="bg-blue-100 text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-blue-100 transition flex items-center justify-center"
         >Min side</a
       >
     </li>
     <li>
       <a
         href="/kryss"
-        class="bg-white text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-white transition flex items-center justify-center"
+        class="bg-blue-100 text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-blue-100 transition flex items-center justify-center"
         >Kryss</a
       >
     </li>
     <li>
       <a
         href="/blue"
-        class="bg-white text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-white transition flex items-center justify-center"
+        class="bg-blue-100 text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-blue-100 transition flex items-center justify-center"
         >Hall of Fame</a
       >
     </li>
@@ -63,7 +63,7 @@
     <li>
       <a
         href="/admin"
-        class="bg-white text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-white transition flex items-center justify-center"
+        class="bg-blue-100 text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-blue-100 transition flex items-center justify-center"
         >Admin</a
       >
     </li>
