@@ -10,7 +10,7 @@ return {
 	assets: new Set(["favicon.png","fonts/Kalmansk-Regular.otf","fonts/SaoTorpes.otf"]),
 	mimeTypes: {".png":"image/png",".otf":"font/otf"},
 	_: {
-		client: {start:"_app/immutable/entry/start.CrwGp4Qy.js",app:"_app/immutable/entry/app.D1iilW0k.js",imports:["_app/immutable/entry/start.CrwGp4Qy.js","_app/immutable/chunks/mhkqrIC6.js","_app/immutable/chunks/BZ9x4nbA.js","_app/immutable/chunks/DIeogL5L.js","_app/immutable/entry/app.D1iilW0k.js","_app/immutable/chunks/D6-TDl98.js","_app/immutable/chunks/BZ9x4nbA.js","_app/immutable/chunks/DIeogL5L.js","_app/immutable/chunks/Bzak7iHL.js","_app/immutable/chunks/CR9fxJk_.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
+		client: {start:"_app/immutable/entry/start.YG4YlUjo.js",app:"_app/immutable/entry/app.abOz3RhR.js",imports:["_app/immutable/entry/start.YG4YlUjo.js","_app/immutable/chunks/BK_0OU9W.js","_app/immutable/chunks/hSulKwDr.js","_app/immutable/chunks/Bphm1Bon.js","_app/immutable/chunks/DIeogL5L.js","_app/immutable/entry/app.abOz3RhR.js","_app/immutable/chunks/LA5rSvFm.js","_app/immutable/chunks/Bphm1Bon.js","_app/immutable/chunks/DIeogL5L.js","_app/immutable/chunks/Bzak7iHL.js","_app/immutable/chunks/hSulKwDr.js","_app/immutable/chunks/C0iwW5Gy.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
 		nodes: [
 			__memo(() => import('./nodes/0.js')),
 			__memo(() => import('./nodes/1.js')),
@@ -20,7 +20,8 @@ return {
 			__memo(() => import('./nodes/5.js')),
 			__memo(() => import('./nodes/6.js')),
 			__memo(() => import('./nodes/7.js')),
-			__memo(() => import('./nodes/8.js'))
+			__memo(() => import('./nodes/8.js')),
+			__memo(() => import('./nodes/9.js'))
 		],
 		remotes: {
 			
@@ -69,10 +70,17 @@ return {
 				endpoint: null
 			},
 			{
+				id: "/ovinger",
+				pattern: /^\/ovinger\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 8 },
+				endpoint: null
+			},
+			{
 				id: "/user",
 				pattern: /^\/user\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 8 },
+				page: { layouts: [0,], errors: [1,], leaf: 9 },
 				endpoint: null
 			}
 		],

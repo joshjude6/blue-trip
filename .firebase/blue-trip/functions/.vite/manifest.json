@@ -126,7 +126,7 @@
       "_firebase.js"
     ],
     "css": [
-      "_app/immutable/assets/_layout.BNtrP5XA.css"
+      "_app/immutable/assets/_layout.rg0k1UG0.css"
     ]
   },
   "src/routes/+page.svelte": {
@@ -186,6 +186,15 @@
       "_exports.js",
       "_utils.js",
       "_state.svelte.js"
+    ]
+  },
+  "src/routes/ovinger/+page.svelte": {
+    "file": "entries/pages/ovinger/_page.svelte.js",
+    "name": "entries/pages/ovinger/_page.svelte",
+    "src": "src/routes/ovinger/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index2.js"
     ]
   },
   "src/routes/user/+page.svelte": {

@@ -7,6 +7,8 @@
     import AdminDeleteUser from "$lib/components/admin-comps/AdminDeleteUser.svelte";
     import AdminKryssChange from "$lib/components/admin-comps/AdminKryssChange.svelte";
     import AdminReset from "$lib/components/admin-comps/AdminReset.svelte";
+    import AdminUpdateEmail from "$lib/components/admin-comps/AdminUpdateEmail.svelte";
+    import AdminFixUsers from "$lib/components/admin-comps/AdminFixUsers.svelte";
 
     let currentUser = null;
     let isAdmin = false;
@@ -56,9 +58,10 @@
     </div>
 {:else if isAdmin}
     <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold mb-8 text-center">Admin Panel</h1>
         <div class="space-y-6">
             <AdminReset />
+            <AdminFixUsers />
+            <AdminUpdateEmail />
             <AdminDeleteUser />
             <AdminCursedRev />
             <AdminKryssChange />

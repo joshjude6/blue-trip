@@ -113,7 +113,7 @@ function XHistory($$payload, $$props) {
     try {
       loading = true;
       error = null;
-      const q = query(collection(db, "kryssLog"), orderBy("timestamp", "desc"), limit(showAll ? 100 : 20));
+      const q = showAll ? query(collection(db, "kryssLog"), orderBy("timestamp", "desc")) : query(collection(db, "kryssLog"), orderBy("timestamp", "desc"), limit(20));
       const querySnapshot = await getDocs(q);
       kryssHistory = [];
       querySnapshot.forEach((doc) => {

@@ -23,12 +23,11 @@
             loading = true;
             error = null;
             
-            // Get recent kryss history, limited to prevent too much data loading
-            const q = query(
-                collection(db, 'kryssLog'), 
-                orderBy('timestamp', 'desc'),
-                limit(showAll ? 100 : 20)
-            );
+            // Get kryss history - show all when requested, otherwise limit to 20
+            const q = showAll 
+                ? query(collection(db, 'kryssLog'), orderBy('timestamp', 'desc'))
+                : query(collection(db, 'kryssLog'), orderBy('timestamp', 'desc'), limit(20));
+            
             const querySnapshot = await getDocs(q);
             
             kryssHistory = [];

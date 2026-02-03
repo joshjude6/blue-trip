@@ -59,6 +59,13 @@
         >Hall of Fame</a
       >
     </li>
+    <li>
+      <a
+        href="/ovinger"
+        class="bg-blue-100 text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-blue-100 transition flex items-center justify-center"
+        >Øvinger</a
+      >
+    </li>
     {#if showAdminButton}
     <li>
       <a
