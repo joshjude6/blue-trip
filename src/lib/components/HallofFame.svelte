@@ -181,9 +181,9 @@
     <div class="max-w-6xl mx-auto space-y-8">
         <!-- Header -->
         <div class="text-center py-8">
-            <h1 class="text-3xl sm:text-4xl font-saotorpes font-bold text-black mb-4">🏆 Hall of Fame</h1>
+            <h1 class="text-3xl sm:text-4xl font-saotorpes font-bold text-black mb-4">🏆 Málaga Hall of Fame</h1>
             <p class="font-kalmansk text-gray-600 text-base sm:text-lg">
-                Topp 3 på leaderboardene for årets blåtur til Málaga, Spania - gratulerer til vinnerne våre!
+                Topp 3 på leaderboardene for blåturen i 2025 til Málaga, Spania - gratulerer til vinnerne våre!
             </p>
         </div>
 
