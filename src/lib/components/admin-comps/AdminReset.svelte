@@ -108,9 +108,20 @@
             let updateCount = 0;
             usersSnapshot.forEach((userDoc) => {
                 const userData = userDoc.data();
-                if (userData.drinkCount && userData.drinkCount > 0) {
+                const hasDrinkData =
+                    (userData.drinkCount && userData.drinkCount > 0) ||
+                    (userData.beerCount && userData.beerCount > 0) ||
+                    (userData.wineCount && userData.wineCount > 0) ||
+                    (userData.mixedDrinkCount && userData.mixedDrinkCount > 0) ||
+                    (userData.shotCount && userData.shotCount > 0);
+
+                if (hasDrinkData) {
                     batch.update(doc(db, 'users', userDoc.id), {
-                        drinkCount: 0
+                        drinkCount: 0,
+                        beerCount: 0,
+                        wineCount: 0,
+                        mixedDrinkCount: 0,
+                        shotCount: 0
                     });
                     updateCount++;
                 }

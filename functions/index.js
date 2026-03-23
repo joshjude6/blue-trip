@@ -261,3 +261,148 @@ exports.fixMissingUserDocuments = functions
       );
     }
   });
+
+// Add quote to quoteLog (uses Admin SDK so it is not blocked by client Firestore rules)
+exports.addQuote = functions
+  .region('europe-west1')
+  .https
+  .onCall(async (data, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        'unauthenticated',
+        'User must be authenticated to add quotes.'
+      );
+    }
+
+    const quote = (data?.quote || '').toString().trim();
+    const saidBy = (data?.saidBy || '').toString().trim();
+
+    if (!quote || !saidBy) {
+      throw new functions.https.HttpsError(
+        'invalid-argument',
+        'Both quote and saidBy are required.'
+      );
+    }
+
+    if (quote.length > 250 || saidBy.length > 80) {
+      throw new functions.https.HttpsError(
+        'invalid-argument',
+        'Quote or saidBy exceeds max length.'
+      );
+    }
+
+    try {
+      const userDoc = await admin.firestore()
+        .collection('users')
+        .doc(context.auth.uid)
+        .get();
+
+      const submittedByName = userDoc.exists
+        ? (userDoc.data().fornavn || 'Unknown')
+        : 'Unknown';
+
+      const createdRef = await admin.firestore().collection('quoteLog').add({
+        quote,
+        saidBy,
+        submittedById: context.auth.uid,
+        submittedByName,
+        timestamp: admin.firestore.FieldValue.serverTimestamp()
+      });
+
+      return { success: true, id: createdRef.id };
+    } catch (error) {
+      console.error('Error adding quote:', error);
+      throw new functions.https.HttpsError(
+        'internal',
+        `Failed to add quote: ${error.message}`
+      );
+    }
+  });
+
+// Read quotes from quoteLog via callable (works even when client lacks direct collection permissions)
+exports.getQuotes = functions
+  .region('europe-west1')
+  .https
+  .onCall(async (data, context) => {
+    try {
+      const showAll = data?.showAll === true;
+      const maxItems = showAll ? 300 : 25;
+
+      const snapshot = await admin.firestore()
+        .collection('quoteLog')
+        .orderBy('timestamp', 'desc')
+        .limit(maxItems)
+        .get();
+
+      const quotes = snapshot.docs.map((docSnap) => {
+        const d = docSnap.data();
+        return {
+          id: docSnap.id,
+          quote: d.quote || '',
+          saidBy: d.saidBy || 'Ukjent',
+          submittedByName: d.submittedByName || 'Ukjent',
+          timestampMs: d.timestamp && d.timestamp.toMillis ? d.timestamp.toMillis() : null
+        };
+      });
+
+      return { success: true, quotes };
+    } catch (error) {
+      console.error('Error getting quotes:', error);
+      throw new functions.https.HttpsError(
+        'internal',
+        `Failed to fetch quotes: ${error.message}`
+      );
+    }
+  });
+
+// Delete quote from quoteLog (admin only)
+exports.deleteQuote = functions
+  .region('europe-west1')
+  .https
+  .onCall(async (data, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        'unauthenticated',
+        'User must be authenticated to delete quotes.'
+      );
+    }
+
+    const quoteId = (data?.quoteId || '').toString().trim();
+    if (!quoteId) {
+      throw new functions.https.HttpsError(
+        'invalid-argument',
+        'quoteId is required.'
+      );
+    }
+
+    try {
+      const adminCheckDoc = await admin.firestore()
+        .collection('users')
+        .doc(context.auth.uid)
+        .get();
+
+      if (!adminCheckDoc.exists || adminCheckDoc.data().isAdmin !== true) {
+        throw new functions.https.HttpsError(
+          'permission-denied',
+          'Only admins can delete quotes.'
+        );
+      }
+
+      await admin.firestore()
+        .collection('quoteLog')
+        .doc(quoteId)
+        .delete();
+
+      return { success: true, deletedId: quoteId };
+    } catch (error) {
+      if (error instanceof functions.https.HttpsError) {
+        throw error;
+      }
+
+      console.error('Error deleting quote:', error);
+      throw new functions.https.HttpsError(
+        'internal',
+        `Failed to delete quote: ${error.message}`
+      );
+    }
+  });

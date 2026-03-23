@@ -7,7 +7,7 @@
   let showAdminButton = false;
 
   onMount(() => {
-    onAuthChange(async (user) => {
+    onAuthChange(async (user: any) => {
       if (user) {
         try {
           const userDoc = await getDoc(doc(db, 'users', user.uid));
@@ -50,6 +50,13 @@
         href="/kryss"
         class="bg-blue-100 text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-blue-100 transition flex items-center justify-center"
         >Kryss</a
+      >
+    </li>
+    <li>
+      <a
+        href="/quotes"
+        class="bg-blue-100 text-blue-600 font-kalmansk text-lg sm:text-2xl rounded-full px-6 py-2 hover:bg-blue-700 hover:text-blue-100 transition flex items-center justify-center"
+        >Quotes</a
       >
     </li>
     <li>

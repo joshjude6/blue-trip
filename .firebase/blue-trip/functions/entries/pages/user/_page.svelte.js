@@ -12,7 +12,7 @@ function DrinkTracker($$payload, $$props) {
   function refresh() {
     fetchUserData();
   }
-  $$payload.out.push(`<div class="w-full max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-4 sm:p-6"><h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black mb-4">🍺 Drikketeller</h2> `);
+  $$payload.out.push(`<div class="w-full max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-4 sm:p-6"><h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black mb-4">� Drikketeller</h2> `);
   {
     $$payload.out.push("<!--[-->");
     $$payload.out.push(`<div class="text-center py-6"><div class="animate-pulse font-kalmansk text-black text-base">Laster...</div></div>`);

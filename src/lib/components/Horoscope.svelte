@@ -161,10 +161,7 @@
   </h3>
   <span class="text-4xl text-blue-600 font-bold transition-colors duration-300 font-saotorpes">{userVibes.join(', ')}</span>
   <h3 class="text-2xl text-center font-saotorpes"> 
-     type dag for deg.
-  </h3>
-  <h3 class="text-xl text-center font-kalmansk">
-    Ikke fornøyd med hvordan dagen din ser ut? Om noen timer endres alt, men husk at du har mest kontroll over din egen skjebne.
+     type tur for deg.
   </h3>
 </div>
 

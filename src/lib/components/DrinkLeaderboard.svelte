@@ -10,6 +10,10 @@
         etternavn: string;
         totalCrosses: number;
         drinkCount: number;
+        beerCount: number;
+        wineCount: number;
+        mixedDrinkCount: number;
+        shotCount: number;
         profilePictureUrl: string | null;
         profilePictureLoading: boolean;
     }> = [];
@@ -52,7 +56,11 @@
                     etternavn: userData.etternavn || '',
                     totalCrosses: userData.totalCrosses || 0,
                     drinkCount: userData.drinkCount || 0,
-                    profilePictureUrl: userData.profilePictureUrl || null, // If stored as URL in document
+                    beerCount: userData.beerCount || 0,
+                    wineCount: userData.wineCount || 0,
+                    mixedDrinkCount: userData.mixedDrinkCount || 0,
+                    shotCount: userData.shotCount || 0,
+                    profilePictureUrl: userData.profilePictureUrl || null,
                     profilePictureLoading: true
                 });
             });
@@ -170,12 +178,18 @@
                         </div>
                     </div>
                     <!-- drikke/kryss-teller -->
-                    <div class="text-right flex-shrink-0 ml-8">
+                    <div class="text-right flex-shrink-0 ml-4">
                         <div class="text-lg sm:text-xl font-saotorpes text-blue-600">
                             {user.drinkCount}
                         </div>
-                        <div class="text-xs sm:text-sm font-kalmansk text-black">
+                        <div class="text-xs sm:text-sm font-kalmansk text-black mb-1">
                             {user.drinkCount === 1 ? 'enhet' : 'enheter'}
+                        </div>
+                        <div class="flex gap-2 justify-end text-xs font-kalmansk text-gray-500 flex-wrap">
+                            {#if user.beerCount > 0}<span>🍺{user.beerCount}</span>{/if}
+                            {#if user.wineCount > 0}<span>🍷{user.wineCount}</span>{/if}
+                            {#if user.mixedDrinkCount > 0}<span>🍸{user.mixedDrinkCount}</span>{/if}
+                            {#if user.shotCount > 0}<span>🥃{user.shotCount}</span>{/if}
                         </div>
                     </div>
                 </div>
@@ -183,7 +197,7 @@
         </div>
         <div class="mt-4 sm:mt-6 pt-4 border-t border-gray-200">
             <div class="flex justify-center sm:justify-between text-xs sm:text-sm font-kalmansk text-black">
-                <span class="text-center sm:text-left">Total mengde enheter: {leaderboard.reduce((sum, user) => sum + user.drinkCount, 0)}</span>
+                <span class="text-center sm:text-left">Total enheter: {leaderboard.reduce((sum, user) => sum + user.drinkCount, 0)}</span>
             </div>
         </div>
     {/if}

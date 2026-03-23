@@ -17,4 +17,17 @@
 @theme{
     --font-saotorpes: SaoTorpes, "sans-serif";
     --font-kalmansk: Kalmansk, "sans-serif";
+
+  /* Global color remap: make all blue utilities render as red */
+  --color-blue-50: var(--color-red-50);
+  --color-blue-100: var(--color-red-100);
+  --color-blue-200: var(--color-red-200);
+  --color-blue-300: var(--color-red-300);
+  --color-blue-400: var(--color-red-400);
+  --color-blue-500: var(--color-red-500);
+  --color-blue-600: var(--color-red-600);
+  --color-blue-700: var(--color-red-700);
+  --color-blue-800: var(--color-red-800);
+  --color-blue-900: var(--color-red-900);
+  --color-blue-950: var(--color-red-950);
 }

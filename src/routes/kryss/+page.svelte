@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-    <title>Kryss</title>
+    <title>Gdansk!</title>
 </svelte:head>
 
 

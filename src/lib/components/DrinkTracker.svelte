@@ -9,7 +9,13 @@
     let loading = false;
     let message = '';
     let authLoading = true;
-    let addAmount = 1;
+
+    const drinkTypes = [
+        { label: 'Øl',    emoji: '🍺', field: 'beerCount' },
+        { label: 'Vin',   emoji: '🍷', field: 'wineCount' },
+        { label: 'Drink',emoji: '🍸', field: 'mixedDrinkCount' },
+        { label: 'Shot',  emoji: '🥃', field: 'shotCount' },
+    ];
 
     onMount(() => {
         const unsubscribe = onAuthChange(async (user: any) => {
@@ -36,7 +42,11 @@
         }
     }
 
-    async function addDrink(amount: number) {
+    function getTotalDrinks(): number {
+        return userData?.drinkCount || 0;
+    }
+
+    async function addDrinkType(field: string, amount: number) {
         if (!currentUser?.uid) {
             message = 'Du må være logget inn for å registrere drikke!';
             return;
@@ -47,12 +57,15 @@
 
         try {
             await updateDoc(doc(db, 'users', currentUser.uid), {
+                [field]: increment(amount),
                 drinkCount: increment(amount)
             });
 
-            // Update local data
+            userData[field] = (userData[field] || 0) + amount;
             userData.drinkCount = (userData.drinkCount || 0) + amount;
-            message = `+${amount} drikke registrert! 🍺`;
+
+            const dt = drinkTypes.find(d => d.field === field);
+            message = `+${amount} ${dt?.label || 'drikke'} registrert! ${dt?.emoji || '🍻'}`;
 
         } catch (error) {
             console.error("Error adding drink:", error);
@@ -63,8 +76,8 @@
         }
     }
 
-    async function subtractDrink() {
-        if (!currentUser?.uid || (userData?.drinkCount || 0) === 0) {
+    async function subtractDrinkType(field: string) {
+        if (!currentUser?.uid || (userData?.[field] || 0) === 0) {
             message = 'Ingen drikke å fjerne!';
             setTimeout(() => message = '', 3000);
             return;
@@ -75,12 +88,15 @@
 
         try {
             await updateDoc(doc(db, 'users', currentUser.uid), {
+                [field]: increment(-1),
                 drinkCount: increment(-1)
             });
 
-            // Update local data
+            userData[field] = Math.max((userData[field] || 0) - 1, 0);
             userData.drinkCount = Math.max((userData.drinkCount || 0) - 1, 0);
-            message = 'Fjernet 1 drikke! ↩️';
+
+            const dt = drinkTypes.find(d => d.field === field);
+            message = `Fjernet 1 ${dt?.label || 'drikke'}! ↩️`;
 
         } catch (error) {
             console.error("Error subtracting drink:", error);
@@ -98,7 +114,7 @@
 </script>
 
 <div class="w-full max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-4 sm:p-6">
-    <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black mb-4">🍺 Drikketeller</h2>
+    <h2 class="text-xl sm:text-2xl font-saotorpes font-bold text-black mb-4">� Drikketeller</h2>
 
     {#if authLoading}
         <div class="text-center py-6">
@@ -109,20 +125,26 @@
             <p class="font-kalmansk text-black text-base">Du må være logget inn for å registrere drikke.</p>
         </div>
     {:else}
-        <!-- Current Count Display -->
+        <!-- Total count display -->
         <div class="bg-blue-50 rounded-lg p-6 text-center mb-6">
             <div class="text-4xl sm:text-5xl font-saotorpes text-blue-600 mb-2">
-                {userData?.drinkCount || 0}
+                {getTotalDrinks()}
             </div>
-            <div class="text-base sm:text-lg font-kalmansk text-black mb-2">
-                {(userData?.drinkCount || 0) === 1 ? 'drikke registrert' : 'drikker registrert'}
+            <div class="text-base sm:text-lg font-kalmansk text-black mb-3">
+                {getTotalDrinks() === 1 ? 'enhet registrert' : 'enheter registrert'}
             </div>
-            <div class="text-sm font-kalmansk text-gray-600">
-                {#if (userData?.drinkCount || 0) === 0}
-                    Ingen drikker registrert ennå. Start tellingen! 
-                {:else if (userData?.drinkCount || 0) < 5}
+            <!-- Breakdown -->
+            <div class="flex justify-center gap-4 text-sm font-kalmansk text-gray-600 flex-wrap mb-3">
+                {#each drinkTypes as { emoji, field }}
+                    <span>{emoji} {userData?.[field] || 0}</span>
+                {/each}
+            </div>
+            <div class="text-sm font-kalmansk text-gray-500">
+                {#if getTotalDrinks() === 0}
+                    Ingen enheter registrert ennå. Start tellingen!
+                {:else if getTotalDrinks() < 5}
                     Demure med det så langt 🫀
-                {:else if (userData?.drinkCount || 0) < 10}
+                {:else if getTotalDrinks() < 10}
                     Noen koser seg på ferie eller? Backer 😎
                 {:else}
                     Godspeed 🥸
@@ -130,67 +152,54 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-            <button 
-                on:click={() => addDrink(1)}
-                disabled={loading}
-                class="py-3 px-4 bg-green-600 text-white font-kalmansk rounded-lg hover:bg-green-700 disabled:bg-gray-400 transition-colors text-base"
-            >
-                +1 🍺
-            </button>
-            <button 
-                on:click={() => addDrink(2)}
-                disabled={loading}
-                class="py-3 px-4 bg-green-600 text-white font-kalmansk rounded-lg hover:bg-green-700 disabled:bg-gray-400 transition-colors text-base"
-            >
-                +2 🍺
-            </button>
-            <button 
-                on:click={() => addDrink(3)}
-                disabled={loading}
-                class="py-3 px-4 bg-green-600 text-white font-kalmansk rounded-lg hover:bg-green-700 disabled:bg-gray-400 transition-colors text-base"
-            >
-                +3 🍺
-            </button>
-            <button 
-                on:click={() => addDrink(5)}
-                disabled={loading}
-                class="py-3 px-4 bg-green-600 text-white font-kalmansk rounded-lg hover:bg-green-700 disabled:bg-gray-400 transition-colors text-base"
-            >
-                +5 🍺
-            </button>
+        <!-- Per-type buttons -->
+        <div class="space-y-3 mb-4">
+            {#each drinkTypes as { label, emoji, field }}
+                <div class="bg-gray-50 rounded-lg p-3">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-kalmansk font-semibold text-black text-base">
+                            {emoji} {label}
+                        </span>
+                        <span class="font-saotorpes text-blue-600 text-lg">
+                            {userData?.[field] || 0}
+                        </span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button
+                            on:click={() => addDrinkType(field, 1)}
+                            disabled={loading}
+                            class="flex-1 py-2 px-3 bg-green-600 text-white font-kalmansk rounded-lg hover:bg-green-700 disabled:bg-gray-400 transition-colors text-sm"
+                        >
+                            +1
+                        </button>
+                        <button
+                            on:click={() => addDrinkType(field, 2)}
+                            disabled={loading}
+                            class="flex-1 py-2 px-3 bg-green-600 text-white font-kalmansk rounded-lg hover:bg-green-700 disabled:bg-gray-400 transition-colors text-sm"
+                        >
+                            +2
+                        </button>
+                        <button
+                            on:click={() => addDrinkType(field, 3)}
+                            disabled={loading}
+                            class="flex-1 py-2 px-3 bg-green-600 text-white font-kalmansk rounded-lg hover:bg-green-700 disabled:bg-gray-400 transition-colors text-sm"
+                        >
+                            +3
+                        </button>
+                        <button
+                            on:click={() => subtractDrinkType(field)}
+                            disabled={loading || (userData?.[field] || 0) === 0}
+                            class="py-2 px-3 bg-red-500 text-white font-kalmansk rounded-lg hover:bg-red-600 disabled:bg-gray-400 transition-colors text-sm"
+                        >
+                            -1 ↩️
+                        </button>
+                    </div>
+                </div>
+            {/each}
         </div>
 
-        <div class="bg-gray-50 rounded-lg p-4 mb-4">
-            <h3 class="font-kalmansk font-semibold text-black text-base mb-3">Egendefinert mengde:</h3>
-            <div class="flex items-center space-x-3">
-                <input 
-                    type="number"
-                    bind:value={addAmount}
-                    min="1"
-                    max="20"
-                    class="w-20 p-2 border border-gray-300 rounded font-kalmansk text-base focus:ring-2 focus:ring-blue-600 focus:border-transparent text-center"
-                />
-                <button 
-                    on:click={() => addDrink(addAmount)}
-                    disabled={loading || addAmount < 1}
-                    class="flex-1 py-2 px-4 bg-blue-600 text-white font-kalmansk rounded hover:bg-blue-700 disabled:bg-gray-400 transition-colors text-base"
-                >
-                    Legg til {addAmount} {addAmount === 1 ? 'drikke' : 'drikker'}
-                </button>
-            </div>
-        </div>
-
-
-        <div class="flex gap-3 mb-4">
-            <button 
-                on:click={subtractDrink}
-                disabled={loading || (userData?.drinkCount || 0) === 0}
-                class="flex-1 py-2 px-4 bg-red-600 text-white font-kalmansk rounded hover:bg-red-700 disabled:bg-gray-400 transition-colors text-base"
-            >
-                Fjern 1 drikke ↩️
-            </button>
-            <button 
+        <div class="flex justify-end mb-4">
+            <button
                 on:click={fetchUserData}
                 disabled={loading}
                 class="px-4 py-2 bg-gray-600 text-white font-kalmansk rounded hover:bg-gray-700 disabled:bg-gray-400 text-base"

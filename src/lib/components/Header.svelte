@@ -7,19 +7,18 @@
   import { doc, getDoc } from 'firebase/firestore';
 
   const translations = [
-  'siste',
-  'last',        // English
-  'letzte',      // German
-  'último',      // Spanish
-  'dernier',     // French
-  '最後',          // Japanese (saigo)
-  '마지막',        // Korean (majimak)
-  'poslední',    // Czech
-  'viimeinen',   // Finnish
-  'zadnji',      // Croatian/Slovenian
-  'utolsó',      // Hungarian
-  'son',         // Turkish
-  '最后',          // Chinese (zuìhòu)
+  'drita',
+  'fucked up',       
+  'dicht', 
+  'borracho',        
+  'bourré',        
+  'べろべろ',       
+  '꽐라',         
+  'kännissä',      
+  'mrtav pijan',   
+  'wstawiony',     
+  'tök részeg',    
+  '喝高了',     
 ];
 
 
@@ -51,7 +50,7 @@
 
 
 <div class="w-full text-center flex justify-center pt-8">
-  <h1 class="text-5xl text-center font-saotorpes">klar for ditt <span class="text-blue-600 font-bold transition-colors duration-300">{currentWord}</span> år{#if userName}, {userName}{/if}?</h1>
+  <h1 class="text-4xl text-center font-saotorpes">klar for å bli <span class="text-blue-600 font-bold transition-colors duration-300">{currentWord}</span> i Gdansk{#if userName}, {userName}{/if}?</h1>
 </div>
 
 <style>
