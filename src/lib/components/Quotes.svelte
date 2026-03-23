@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import { db, functions } from '$lib/api/firebase.js';
     import { onAuthChange } from '$lib/api/auth.js';
-    import { collection, query, orderBy, getDocs, doc, getDoc } from 'firebase/firestore';
+    import { doc, getDoc } from 'firebase/firestore';
     import { httpsCallable } from 'firebase/functions';
 
     let currentUser: any = null;
@@ -16,8 +16,6 @@
 
     let quoteText = '';
     let saidBy = '';
-    let nameOptions: string[] = [];
-    let userNameOptions: string[] = [];
 
     let quotes: Array<{
         id: string;
@@ -55,30 +53,9 @@
             }
         });
 
-        fetchUserNames();
         fetchQuotes();
         return () => unsubscribe();
     });
-
-    async function fetchUserNames() {
-        try {
-            const usersSnapshot = await getDocs(query(collection(db, 'users'), orderBy('fornavn', 'asc')));
-            const firstNames = new Set<string>();
-
-            usersSnapshot.forEach((userDoc) => {
-                const userData = userDoc.data();
-                const firstName = (userData.fornavn || '').toString().trim();
-                if (firstName) {
-                    firstNames.add(firstName);
-                }
-            });
-
-            userNameOptions = Array.from(firstNames).sort((a, b) => a.localeCompare(b, 'no'));
-            nameOptions = userNameOptions;
-        } catch (err) {
-            console.error('Error fetching user names:', err);
-        }
-    }
 
     async function fetchQuotes() {
         try {
@@ -90,15 +67,7 @@
             const entries = response?.data?.quotes || [];
 
             quotes = [];
-            const firstNames = new Set<string>();
-
             entries.forEach((data: any) => {
-                const rawName = (data.saidBy || '').toString().trim();
-                const firstName = rawName.split(/\s+/)[0];
-                if (firstName) {
-                    firstNames.add(firstName);
-                }
-
                 let formattedTime = 'Ukjent tid';
                 if (data.timestampMs) {
                     const date = new Date(data.timestampMs);
@@ -120,14 +89,6 @@
                     formattedTime
                 });
             });
-
-            const quoteNameOptions = Array.from(firstNames).sort((a, b) => a.localeCompare(b, 'no'));
-            const mergedOptions = new Set<string>([...userNameOptions, ...quoteNameOptions]);
-            nameOptions = Array.from(mergedOptions).sort((a, b) => a.localeCompare(b, 'no'));
-
-            if (!nameOptions.includes(saidBy)) {
-                saidBy = '';
-            }
         } catch (err) {
             console.error('Error fetching quotes:', err);
             error = 'Kunne ikke laste quotes.';
@@ -235,20 +196,15 @@
 
                 <div>
                     <label for="saidBy" class="block text-base font-kalmansk font-semibold text-black mb-2">Hvem sa det?</label>
-                    <select
+                    <input
                         id="saidBy"
+                        type="text"
                         bind:value={saidBy}
+                        maxlength="80"
                         required
+                        placeholder="hvem, og kontekst?"
                         class="w-full p-3 border border-gray-300 rounded-lg font-kalmansk text-base focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                    >
-                        <option value="">Velg navn...</option>
-                        {#each nameOptions as firstName}
-                            <option value={firstName}>{firstName}</option>
-                        {/each}
-                    </select>
-                    {#if nameOptions.length === 0}
-                        <div class="text-sm text-gray-500 font-kalmansk mt-1">Ingen navn funnet i quote-loggen ennå.</div>
-                    {/if}
+                    />
                 </div>
 
                 <button

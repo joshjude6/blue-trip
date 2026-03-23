@@ -141,13 +141,21 @@
             </div>
             <div class="text-sm font-kalmansk text-gray-500">
                 {#if getTotalDrinks() === 0}
-                    Ingen enheter registrert ennå. Start tellingen!
+                    Ingen enheter registrert ennå. Hva venter du på?
                 {:else if getTotalDrinks() < 5}
-                    Demure med det så langt 🫀
+                    Ansvarlig av deg 😌
                 {:else if getTotalDrinks() < 10}
-                    Noen koser seg på ferie eller? Backer 😎
-                {:else}
-                    Godspeed 🥸
+                    Vors før vorset? 🥸
+                {:else if getTotalDrinks() < 15}
+                    Lykkepromillen har kommet og gått 🍀
+                {:else if getTotalDrinks() < 20}
+                    Gdansk be gdansking 🍾
+                {:else if getTotalDrinks() < 25}
+                    Early 20s! Herfra går det bare oppover ⚡️
+                {:else if getTotalDrinks() < 30}
+                    Om du ser dette er jeg stolt av deg, men vi kommer ikke til å bære deg hjem 🪫
+                {:else if getTotalDrinks() >= 30}
+                    Vis meg skjermen, så får du en premie av meg!🤩
                 {/if}
             </div>
         </div>
